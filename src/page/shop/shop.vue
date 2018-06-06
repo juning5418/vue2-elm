@@ -22,16 +22,16 @@
                             <path d="M0 0 L8 7 L0 14"  stroke="#fff" stroke-width="1" fill="none"/>
                         </svg>
                     </router-link>
-                    <footer class="description_footer" v-if="shopDetailData.activities.length" @click="showActivitiesFun">
-                        <p class="ellipsis">
-                            <span class="tip_icon" :style="{backgroundColor: '#' + shopDetailData.activities[0].icon_color, borderColor: '#' + shopDetailData.activities[0].icon_color}">{{shopDetailData.activities[0].icon_name}}</span>
-                            <span>{{shopDetailData.activities[0].description}}（APP专享）</span>
-                        </p>
-                        <p>{{shopDetailData.activities.length}}个活动</p>
-                        <svg class="footer_arrow">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-left"></use>
-                        </svg>
-                    </footer>
+                    <!--<footer class="description_footer" v-if="shopDetailData.activities.length" @click="showActivitiesFun">-->
+                        <!--<p class="ellipsis">-->
+                            <!--<span class="tip_icon" :style="{backgroundColor: '#' + shopDetailData.activities[0].icon_color, borderColor: '#' + shopDetailData.activities[0].icon_color}">{{shopDetailData.activities[0].icon_name}}</span>-->
+                            <!--<span>{{shopDetailData.activities[0].description}}（APP专享）</span>-->
+                        <!--</p>-->
+                        <!--<p>{{shopDetailData.activities.length}}个活动</p>-->
+                        <!--<svg class="footer_arrow">-->
+                            <!--<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-left"></use>-->
+                        <!--</svg>-->
+                    <!--</footer>-->
 
                 </section>
             </header>
@@ -41,19 +41,19 @@
                     <h3 class="activities_ratingstar">
                         <rating-star :rating='shopDetailData.rating'></rating-star>
                     </h3>
-                    <section class="activities_list">
-                        <header class="activities_title_style"><span>优惠信息</span></header>
-                        <ul>
-                            <li v-for="item in shopDetailData.activities" :key="item.id">
-                                <span class="activities_icon" :style="{backgroundColor: '#' + item.icon_color, borderColor: '#' + item.icon_color}">{{item.icon_name}}</span>
-                                <span>{{item.description}}（APP专享）</span>
-                            </li>
-                        </ul>
-                    </section>
-                    <section class="activities_shopinfo">
-                        <header class="activities_title_style"><span>商家公告</span></header>
-                        <p>{{promotionInfo}}</p>
-                    </section>
+                    <!--<section class="activities_list">-->
+                        <!--<header class="activities_title_style"><span>优惠信息</span></header>-->
+                        <!--<ul>-->
+                            <!--<li v-for="item in shopDetailData.activities" :key="item.id">-->
+                                <!--<span class="activities_icon" :style="{backgroundColor: '#' + item.icon_color, borderColor: '#' + item.icon_color}">{{item.icon_name}}</span>-->
+                                <!--<span>{{item.description}}（APP专享）</span>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</section>-->
+                    <!--<section class="activities_shopinfo">-->
+                        <!--<header class="activities_title_style"><span>商家公告</span></header>-->
+                        <!--<p>{{promotionInfo}}</p>-->
+                    <!--</section>-->
                     <svg width="60" height="60" class="close_activities" @click.stop="showActivitiesFun">
                         <circle cx="30" cy="30" r="25" stroke="#555" stroke-width="1" fill="none"/>
                         <line x1="22" y1="38" x2="38" y2="22" style="stroke:#999;stroke-width:2"/>
@@ -103,11 +103,11 @@
                                             <section class="menu_food_description">
                                                 <h3 class="food_description_head">
                                                     <strong class="description_foodname">{{foods.name}}</strong>
-                                                    <ul v-if="foods.attributes.length" class="attributes_ul">
-                                                        <li v-for="(attribute, foodindex) in foods.attributes" :key="foodindex" :style="{color: '#' + attribute.icon_color,borderColor:'#' +attribute.icon_color}" :class="{attribute_new: attribute.icon_name == '新'}">
-                                                        <p :style="{color: attribute.icon_name == '新'? '#fff' : '#' + attribute.icon_color}">{{attribute.icon_name == '新'? '新品':attribute.icon_name}}</p>
-                                                        </li>
-                                                    </ul>
+                                                    <!--<ul v-if="foods.attributes.length" class="attributes_ul">-->
+                                                        <!--<li v-for="(attribute, foodindex) in foods.attributes" :key="foodindex" :style="{color: '#' + attribute.icon_color,borderColor:'#' +attribute.icon_color}" :class="{attribute_new: attribute.icon_name == '新'}">-->
+                                                        <!--<p :style="{color: attribute.icon_name == '新'? '#fff' : '#' + attribute.icon_color}">{{attribute.icon_name == '新'? '新品':attribute.icon_name}}</p>-->
+                                                        <!--</li>-->
+                                                    <!--</ul>-->
 
                                                 </h3>
                                                 <p class="food_description_content">{{foods.description}}</p>
@@ -471,7 +471,7 @@
                 const wrapMenuHeight = this.$refs.wrapperMenu.clientHeight;
                 this.foodScroll.on('scroll', (pos) => {
                     if (!this.$refs.wrapperMenu) {
-                        return 
+                        return
                     }
                     this.shopListTop.forEach((item, index) => {
                         if (this.menuIndexChange && Math.abs(Math.round(pos.y)) >= item) {

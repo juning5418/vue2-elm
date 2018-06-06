@@ -156,6 +156,18 @@ export const foodMenu = restaurant_id => fetch('/shopping/v2/menu', {
 
 
 /**
+ * 获取商品列表
+ */
+export const getFoods = data => fetch('/shopping/v2/foods', data);
+
+/**
+ * 获取商品数量
+ */
+export const getFoodsCount = data => fetch('/shopping/v2/foods/count', data);
+
+
+
+/**
  * 获取商铺评价列表
  */
 
