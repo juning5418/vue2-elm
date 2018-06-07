@@ -12,29 +12,32 @@
 			</router-link>
     	</head-top>
     	<nav class="msite_nav">
-    		<div class="swiper-container" v-if="foodTypes.length">
+    		<div class="swiper-container" v-if="banners.length">
 		        <div class="swiper-wrapper">
-		            <div class="swiper-slide food_types_container" v-for="(item, index) in foodTypes" :key="index">
-	            		<router-link :to="{path: '/food', query: {geohash, title: foodItem.title, restaurant_category_id: getCategoryId(foodItem.link)}}" v-for="foodItem in item" :key="foodItem.id" class="link_to_food">
-	            			<figure>
-	            				<img :src="imgBaseUrl + foodItem.image_url">
-	            				<figcaption>{{foodItem.title}}</figcaption>
-	            			</figure>
-	            		</router-link>
+		            <div class="swiper-slide" v-for="banner in banners">
+                  <img :src="banner" alt="" width="100%" >
 		            </div>
-		        </div>
-		        <div class="swiper-pagination" v-if="foodTypes.length>8"></div>
-		    </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
 		    <img src="../../images/fl.svg" class="fl_back animation_opactiy" v-else>
     	</nav>
+
+      <div class="image-type">
+        <img src="http://localhost:8000/img/163c98254843.png" width="32%"/>
+        <img src="http://localhost:8000/img/163c98254843.png" width="32%"/>
+        <img src="http://localhost:8000/img/163c98254843.png" width="32%"/>
+      </div>
+
+
     	<div class="shop_list_container">
 	    	<header class="shop_header">
 	    		<svg class="shop_icon">
 	    			<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shop"></use>
 	    		</svg>
-	    		<span class="shop_header_title">附近活动</span>
+	    		<span class="shop_header_title">商品</span>
 	    	</header>
-	    	<shop-list v-if="hasGetData" :geohash="geohash"></shop-list>
+	    	<good-list v-if="hasGetData" :geohash="geohash"></good-list>
     	</div>
     	<foot-guide></foot-guide>
     </div>
@@ -45,8 +48,8 @@ import {mapMutations} from 'vuex'
 // import {imgBaseUrl} from 'src/config/env'
 import headTop from 'src/components/header/head'
 import footGuide from 'src/components/footer/footGuide'
-import shopList from 'src/components/common/shoplist'
-import {msiteAddress, msiteFoodTypes, cityGuess} from 'src/service/getData'
+import goodList from 'src/components/common/goodlist'
+import {msiteAddress, cityGuess} from 'src/service/getData'
 import 'src/plugins/swiper.min.js'
 import 'src/style/swiper.min.css'
 
@@ -58,6 +61,8 @@ export default {
             foodTypes: [], // 食品分类列表
             hasGetData: false, //是否已经获取地理位置数据，成功之后再获取商铺列表信息
             imgBaseUrl: 'https://fuss10.elemecdn.com', //图片域名地址
+            banners: ['http://imgs-qn.iliangcang.com/ware/sowhatimg/ware/orig/2/30/30318.jpg',
+            'http://imgs-qn.iliangcang.com/ware/sowhatimg/ware/orig/2/30/30318.jpg']
         }
     },
     async beforeMount(){
@@ -78,26 +83,11 @@ export default {
     	this.hasGetData = true;
     },
     mounted(){
-        //获取导航食品类型列表
-       	msiteFoodTypes(this.geohash).then(res => {
-       		let resLength = res.length;
-       		let resArr = [...res]; // 返回一个新的数组
-       		let foodArr = [];
-    		for (let i = 0, j = 0; i < resLength; i += 8, j++) {
-    			foodArr[j] = resArr.splice(0, 8);
-    		}
-    		this.foodTypes = foodArr;
-        }).then(() => {
-        	//初始化swiper
-        	new Swiper('.swiper-container', {
-		        pagination: '.swiper-pagination',
-		        loop: true
-		    });
-        })
+
     },
     components: {
     	headTop,
-    	shopList,
+      goodList,
     	footGuide,
     },
     computed: {
@@ -152,34 +142,22 @@ export default {
 			@include wh(100%, auto);
 			padding-bottom: 0.6rem;
 			.swiper-pagination{
-				bottom: 0.2rem;
+				bottom: 0.6rem;
 			}
 		}
 		.fl_back{
 			@include wh(100%, 100%);
 		}
 	}
-	.food_types_container{
-		display:flex;
-		flex-wrap: wrap;
-		.link_to_food{
-			width: 25%;
-			padding: 0.3rem 0rem;
-			@include fj(center);
-			figure{
-				img{
-					margin-bottom: 0.3rem;
-					@include wh(1.8rem, 1.8rem);
-				}
-				figcaption{
-					text-align: center;
-					@include sc(0.55rem, #666);
-				}
-			}
-		}
-	}
+
+  .image-type{
+    margin-top: 1.4rem;
+    display:block;
+    margin-bottom:fill ;
+  }
+
 	.shop_list_container{
-		margin-top: .4rem;
+		margin-top: 0.2rem;
 		border-top: 0.025rem solid $bc;
 		background-color: #fff;
 		.shop_header{
