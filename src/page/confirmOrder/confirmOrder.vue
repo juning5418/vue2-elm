@@ -24,13 +24,13 @@
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use>
                 </svg>
             </router-link>
-            <section class="delivery_model container_style">
-                <p class="deliver_text">送达时间</p>
-                <section class="deliver_time">
-                    <p>尽快送达 | 预计 {{checkoutData.delivery_reach_time}}</p>
-                    <p v-if="checkoutData.cart.is_deliver_by_fengniao">蜂鸟专送</p>
-                </section>
-            </section>
+            <!--<section class="delivery_model container_style">-->
+                <!--<p class="deliver_text">送达时间</p>-->
+                <!--<section class="deliver_time">-->
+                    <!--<p>尽快送达 | 预计 {{checkoutData.delivery_reach_time}}</p>-->
+                    <!--<p v-if="checkoutData.cart.is_deliver_by_fengniao">蜂鸟专送</p>-->
+                <!--</section>-->
+            <!--</section>-->
             <section class="pay_way container_style">
                 <header class="header_style">
                     <span>支付方式</span>
@@ -41,10 +41,10 @@
                         </svg>
                     </div>
                 </header>
-                <section class="hongbo">
-                    <span>红包</span>
-                    <span>暂时只在饿了么 APP 中支持</span>
-                </section>
+                <!--<section class="hongbo">-->
+                    <!--<span>红包</span>-->
+                    <!--<span>暂时只在饿了么 APP 中支持</span>-->
+                <!--</section>-->
             </section>
             <section class="food_list">
                 <header v-if="checkoutData.cart.restaurant_info">

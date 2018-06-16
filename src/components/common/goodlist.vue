@@ -4,7 +4,7 @@
 
       <!--<router-link  :to="{path: 'shop/foodDetail', query:{image_path:foods.image_path, description: foods.description, month_sales: foods.month_sales, name: foods.name, rating: foods.rating, rating_count: foods.rating_count, satisfy_rate: foods.satisfy_rate, foods, shopId}}" v-for="(foods,foodindex) in goodListArr" :key="foodindex"  tag='li' :key="foods.id" class="shop_li">-->
 
-      <router-link :to="{path: 'shop/foodDetail', query:{image_path:item.image_path, description: item.description, month_sales: item.month_sales, name: item.name, rating: item.rating, rating_count: item.rating_count, satisfy_rate: item.satisfy_rate, item}}" v-for="item in goodListArr" tag='li' :key="item.id" class="shop_li">
+      <router-link :to="{path: 'itemDetail', query:{shopId:1,geohash,item_id:item.item_id,image_path:item.image_path, description: item.description, month_sales: item.month_sales, name: item.name, rating: item.rating, rating_count: item.rating_count, satisfy_rate: item.satisfy_rate, goods: item}}" v-for="item in goodListArr" tag='li' :key="item.id" class="shop_li">
 				<section>
 					<img :src="imgBaseUrl + item.image_path" class="shop_img">
 				</section>
@@ -23,6 +23,14 @@
 							</section>
 						</section>
 					</h5>
+          <h5 class="fee_distance">
+            <p class="fee">
+              <span class="segmentation">推荐</span>
+            </p>
+            <p class="distance_time">
+              单价  ¥{{item.specfoods[0].price}}
+            </p>
+          </h5>
 
 				</hgroup>
 			</router-link>
@@ -90,7 +98,7 @@ export default {
 
 
       try{
-        const countData = await getFoodsCount({restaurant_id: this.restaurant_id});
+        const countData = await getFoodsCount({restaurant_id: 1});
         if (countData.status == 1) {
           this.count = countData.count;
         }else{
@@ -103,7 +111,7 @@ export default {
 
 		},
     async getFoods(){
-      let res = await getFoods({offset: this.offset, limit: this.limit, restaurant_id: this.restaurant_id});
+      let res = await getFoods({offset: this.offset, limit: this.limit, restaurant_id: 1});
 
 
       this.goodListArr = [...res];
@@ -167,7 +175,7 @@ export default {
 		async listenPropChange(){
 			this.showLoading = true;
 			this.offset = 0;
-			let res = await shopList(this.latitude, this.longitude, this.offset, '', this.restaurantCategoryIds, this.sortByType, this.deliveryMode, this.supportIds);
+			let res = await getFoods(this.latitude, this.longitude, this.offset, '', this.restaurantCategoryIds, this.sortByType, this.deliveryMode, this.supportIds);
 			this.hideLoading();
 			//考虑到本地模拟数据是引用类型，所以返回一个新的数组
 			this.goodListArr = [...res];

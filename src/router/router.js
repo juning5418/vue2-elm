@@ -2,7 +2,8 @@ import App from '../App'
 
 const home = r => require.ensure([], () => r(require('../page/home/home')), 'home')
 const city = r => require.ensure([], () => r(require('../page/city/city')), 'city')
-const msite = r => require.ensure([], () => r(require('../page/msite/msite')), 'msite')
+const msite = r => require.ensure([], () => r(require('../page/msite/msite3')), 'msite')
+const msite1 = r => require.ensure([], () => r(require('../page/msite/msite')), 'msite1')
 const search = r => require.ensure([], () => r(require('../page/search/search')), 'search')
 const shop = r => require.ensure([], () => r(require('../page/shop/shop')), 'shop')
 const login = r => require.ensure([], () => r(require('../page/login/login')), 'login')
@@ -24,6 +25,7 @@ const chooseAddress = r => require.ensure([], () => r(require('../page/confirmOr
 const addAddress = r => require.ensure([], () => r(require('../page/confirmOrder/children/children/addAddress')), 'addAddress')
 const searchAddress = r => require.ensure([], () => r(require('../page/confirmOrder/children/children/children/searchAddress')), 'searchAddress')
 const foodDetail = r => require.ensure([], () => r(require('../page/shop/children/foodDetail')), 'foodDetail')
+const itemDetail = r => require.ensure([], () => r(require('../page/shop/children/itemDetail')), 'itemDetail')
 const shopDetail = r => require.ensure([], () => r(require('../page/shop/children/shopDetail')), 'shopDetail')
 const shopSafe = r => require.ensure([], () => r(require('../page/shop/children/children/shopSafe')), 'shopSafe')
 const info = r => require.ensure([], () => r(require('../page/profile/children/info')), 'info')
@@ -58,6 +60,11 @@ export default [{
             path: '',
             redirect: '/msite'
         },
+        //test
+        {
+          path: '/msite1',
+          component: msite1
+        },
         //首页城市列表页
         {
             path: '/home',
@@ -83,6 +90,11 @@ export default [{
         {
             path: '/search/:geohash',
             component: search
+        },
+        //商品详情
+        {
+          path: '/itemDetail',
+          component: itemDetail
         },
         //商铺详情页
         {

@@ -7,21 +7,22 @@
 	    			<line x1="14" y1="14" x2="20" y2="20" style="stroke:rgb(255,255,255);stroke-width:2"/>
 	    		</svg>
     		</router-link>
-			<router-link to="/home" slot="msite-title" class="msite_title">
-				<span class="title_text ellipsis">{{msiteTitle}}</span>
-			</router-link>
+        <router-link to="/home" slot="msite-title" class="msite_title">
+          <span class="title_text ellipsis">{{msiteTitle}}</span>
+        </router-link>
     	</head-top>
+
     	<nav class="msite_nav">
     		<div class="swiper-container" v-if="banners.length">
 		        <div class="swiper-wrapper">
-		            <div class="swiper-slide" v-for="banner in banners">
+		            <div class="swiper-slide" v-for="banner in banners" >
                   <img :src="banner" alt="" width="100%" >
 		            </div>
             </div>
             <div class="swiper-pagination"></div>
         </div>
 		    <img src="../../images/fl.svg" class="fl_back animation_opactiy" v-else>
-    	</nav>
+      </nav>
 
       <div class="image-type">
         <img src="http://localhost:8000/img/163c98254843.png" width="32%"/>
@@ -39,6 +40,7 @@
 	    	</header>
 	    	<good-list v-if="hasGetData" :geohash="geohash"></good-list>
     	</div>
+
     	<foot-guide></foot-guide>
     </div>
 </template>
@@ -58,29 +60,29 @@ export default {
         return {
         	geohash: '', // city页面传递过来的地址geohash
             msiteTitle: '请选择地址...', // msite页面头部标题
-            foodTypes: [], // 食品分类列表
             hasGetData: false, //是否已经获取地理位置数据，成功之后再获取商铺列表信息
-            imgBaseUrl: 'https://fuss10.elemecdn.com', //图片域名地址
+            imgBaseUrl: 'https://image.woarehere.com', //图片域名地址
             banners: ['http://imgs-qn.iliangcang.com/ware/sowhatimg/ware/orig/2/30/30318.jpg',
-            'http://imgs-qn.iliangcang.com/ware/sowhatimg/ware/orig/2/30/30318.jpg']
+            'http://imgs-qn.iliangcang.com/ware/sowhatimg/ware/orig/2/30/30318.jpg',
+              'http://imgs-qn.iliangcang.com/ware/sowhatimg/ware/orig/2/30/30318.jpg']
         }
     },
     async beforeMount(){
-		if (!this.$route.query.geohash) {
-			const address = await cityGuess();
-			this.geohash = address.latitude + ',' + address.longitude;
-		}else{
-			this.geohash = this.$route.query.geohash
-		}
-		//保存geohash 到vuex
-		this.SAVE_GEOHASH(this.geohash);
-    	//获取位置信息
-    	let res = await msiteAddress(this.geohash);
-    	this.msiteTitle = res.name;
-    	// 记录当前经度纬度
-    	this.RECORD_ADDRESS(res);
+      if (!this.$route.query.geohash) {
+        const address = await cityGuess();
+        this.geohash = address.latitude + ',' + address.longitude;
+      }else{
+        this.geohash = this.$route.query.geohash
+      }
+      //保存geohash 到vuex
+      this.SAVE_GEOHASH(this.geohash);
+      //获取位置信息
+      let res = await msiteAddress(this.geohash);
+      this.msiteTitle = res.name;
+      // 记录当前经度纬度
+      this.RECORD_ADDRESS(res);
 
-    	this.hasGetData = true;
+      this.hasGetData = true;
     },
     mounted(){
 

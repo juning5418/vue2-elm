@@ -155,6 +155,11 @@ export const foodMenu = restaurant_id => fetch('/shopping/v2/menu', {
 });
 
 
+export const getFoodDetal = (restaurant_id,item_id) =>fetch('/shopping/v2/foods/getFoodDetal', {
+  restaurant_id,item_id
+});
+
+
 /**
  * 获取商品列表
  */

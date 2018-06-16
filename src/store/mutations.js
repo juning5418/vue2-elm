@@ -28,6 +28,8 @@ import {
 	SAVE_QUESTION,
 	ADD_ADDRESS,
 	BUY_CART,
+  ADD_CART_BOX,
+  REDUCE_CART_BOX
 } from './mutation-types.js'
 
 import {setStore, getStore} from '../config/mUtils'
@@ -47,6 +49,52 @@ export default {
 	[RECORD_SHOPDETAIL](state, detail) {
 		state.shopDetail = detail;
 	},
+
+
+
+  // 加入购物车
+  [ADD_CART_BOX](state, {
+    shopid,
+    category_id,
+    item_id,
+    food_id,
+    name,
+    price,
+    specs,
+    packing_fee,
+    sku_id,
+    stock
+  }) {
+    let cart = state.cartList;
+    let _index = shopid+","+category_id+","+item_id;
+    let shop = cart[shopid] = (cart[shopid] || {});
+
+    // let category = shop[_index] = (shop[_index] || {});
+
+    if (shop[item_id]) {
+      shop[item_id]['num']++;
+    } else {
+      shop[item_id] = {
+        "num" : 1,
+        "id" : food_id,
+        "name" : name,
+        "price" : price,
+        "specs" : specs,
+        "packing_fee" : packing_fee,
+        "sku_id" : sku_id,
+        "stock" : stock,
+        "shopid":shopid,
+        "category_id":category_id,
+        "item_id":item_id,
+        "food_id":food_id
+      };
+    }
+    state.cartList = {...cart};
+    //存入localStorage
+    setStore('buyCart', state.cartList);
+  },
+
+
 	// 加入购物车
 	[ADD_CART](state, {
 		shopid,
@@ -64,6 +112,7 @@ export default {
 		let shop = cart[shopid] = (cart[shopid] || {});
 		let category = shop[category_id] = (shop[category_id] || {});
 		let item = category[item_id] = (category[item_id] || {});
+
 		if (item[food_id]) {
 			item[food_id]['num']++;
 		} else {
@@ -82,6 +131,38 @@ export default {
 		//存入localStorage
 		setStore('buyCart', state.cartList);
 	},
+
+
+  // 移出购物车
+  [REDUCE_CART_BOX](state, {
+    shopid,
+    category_id,
+    item_id,
+    food_id,
+    name,
+    price,
+    specs,
+  }) {
+    let cart = state.cartList;
+    // let _index = shopid+","+category_id+","+item_id;
+
+    let shop = (cart[shopid] || {});
+    // let category = shop[_index] = (shop[_index] || {});
+
+    if (shop && shop[item_id]) {
+      if (shop[item_id]['num'] > 0) {
+        shop[item_id]['num']--;
+        state.cartList = {...cart};
+        //存入localStorage
+        setStore('buyCart', state.cartList);
+      } else {
+        //商品数量为0，则清空当前商品的信息
+        shop[item_id] = null;
+      }
+    }
+  },
+
+
 	// 移出购物车
 	[REDUCE_CART](state, {
 		shopid,
@@ -168,7 +249,7 @@ export default {
 	//保存geohash
 	[SAVE_GEOHASH](state, geohash) {
 		state.geohash = geohash;
-		
+
 	},
 	//确认订单页添加新的的地址
 	[CONFIRM_ADDRESS](state, newAddress) {
