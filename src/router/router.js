@@ -4,7 +4,7 @@ const home = r => require.ensure([], () => r(require('../page/home/home')), 'hom
 const city = r => require.ensure([], () => r(require('../page/city/city')), 'city')
 const msite = r => require.ensure([], () => r(require('../page/msite/msite3')), 'msite')
 const msite1 = r => require.ensure([], () => r(require('../page/msite/msite')), 'msite1')
-const search = r => require.ensure([], () => r(require('../page/search/search')), 'search')
+const search = r => require.ensure([], () => r(require('../page/search/searchMain')), 'search')
 const shop = r => require.ensure([], () => r(require('../page/shop/shop')), 'shop')
 const login = r => require.ensure([], () => r(require('../page/login/login')), 'login')
 const profile = r => require.ensure([], () => r(require('../page/profile/profile')), 'profile')

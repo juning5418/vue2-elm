@@ -106,7 +106,8 @@ export default {
 		specs,
 		packing_fee,
 		sku_id,
-		stock
+		stock,
+    image_path
 	}) {
 		let cart = state.cartList;
 		let shop = cart[shopid] = (cart[shopid] || {});
@@ -124,7 +125,8 @@ export default {
 					"specs" : specs,
 					"packing_fee" : packing_fee,
 					"sku_id" : sku_id,
-					"stock" : stock
+					"stock" : stock,
+          "image_path":image_path
 			};
 		}
 		state.cartList = {...cart};

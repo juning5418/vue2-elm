@@ -3,12 +3,12 @@
         <head-top head-title="在线支付" go-back='true'></head-top>
         <section class="show_time_amount">
         	<section>
-                <header class="time_last">支付剩余时间</header>
-                <p class="time">{{remaining}}</p>
+                <!--<header class="time_last">支付剩余时间</header>-->
+                <!--<p class="time">{{remaining}}</p>-->
                 <footer class="order_detail" v-if="payDetail.resultData">
                     <span>详情</span>
                     <span>¥ {{cartPrice&&cartPrice.toFixed(2) || payDetail.resultData.orderInfo.orderAmount&&(payDetail.resultData.orderInfo.orderAmount/100).toFixed(2)}}</span>
-                </footer>   
+                </footer>
             </section>
         </section>
         <div class="pay_way">选择支付方式</div>
@@ -16,7 +16,7 @@
             <section class="pay_item">
                 <div class="pay_icon_contaienr">
                     <div class="zhifubao">
-                        
+
                     </div>
                     <span>支付宝</span>
                 </div>
@@ -70,28 +70,28 @@
             }
         },
         mounted(){
-            this.remainingTime();
+            // this.remainingTime();
         },
         beforeDestroy(){
-            clearInterval(this.timer);
+            // clearInterval(this.timer);
         },
         props:[],
         computed: {
             ...mapState([
                 'orderMessage', 'userInfo', 'shopid', 'cartPrice'
             ]),
-            //时间转换
-            remaining: function (){
-                let minute = parseInt(this.countNum/60);
-                if (minute < 10) {
-                    minute = '0' + minute;
-                }
-                let second = parseInt(this.countNum%60);
-                if (second < 10) {
-                    second = '0' + second;
-                }
-                return '00 : ' + minute + ' : ' + second;
-            }
+            // //时间转换
+            // remaining: function (){
+            //     let minute = parseInt(this.countNum/60);
+            //     if (minute < 10) {
+            //         minute = '0' + minute;
+            //     }
+            //     let second = parseInt(this.countNum%60);
+            //     if (second < 10) {
+            //         second = '0' + second;
+            //     }
+            //     return '00 : ' + minute + ' : ' + second;
+            // }
         },
         methods: {
             ...mapMutations([
@@ -107,17 +107,17 @@
                 }
             },
             //倒计时
-            remainingTime(){
-                clearInterval(this.timer);
-                this.timer = setInterval(() => {
-                    this.countNum --;
-                    if (this.countNum == 0) {
-                        clearInterval(this.timer);
-                        this.showAlert = true;
-                        this.alertText = '支付超时';
-                    }
-                }, 1000);
-            },
+            // remainingTime(){
+            //     clearInterval(this.timer);
+            //     this.timer = setInterval(() => {
+            //         this.countNum --;
+            //         if (this.countNum == 0) {
+            //             clearInterval(this.timer);
+            //             this.showAlert = true;
+            //             this.alertText = '支付超时';
+            //         }
+            //     }, 1000);
+            // },
             //确认付款
             confrimPay(){
                 this.showAlert = true;
@@ -134,10 +134,10 @@
         }
     }
 </script>
-  
+
 <style lang="scss" scoped>
     @import 'src/style/mixin';
-  
+
     .rating_page{
         position: fixed;
         top: 0;
@@ -224,5 +224,5 @@
         margin-top: 0.5rem;
         font-weight: bold;
     }
-    
+
 </style>

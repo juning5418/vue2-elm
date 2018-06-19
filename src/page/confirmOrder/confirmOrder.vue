@@ -16,7 +16,7 @@
                         </header>
                         <div class="address_detail">
                             <span v-if="choosedAddress.tag" :style="{backgroundColor: iconColor(choosedAddress.tag)}">{{choosedAddress.tag}}</span>
-                            <p>{{choosedAddress.address_detail}}</p>
+                            <p>{{choosedAddress.address +" "+ choosedAddress.address_detail}}</p>
                         </div>
                     </div>
                 </div>
@@ -24,13 +24,6 @@
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use>
                 </svg>
             </router-link>
-            <!--<section class="delivery_model container_style">-->
-                <!--<p class="deliver_text">送达时间</p>-->
-                <!--<section class="deliver_time">-->
-                    <!--<p>尽快送达 | 预计 {{checkoutData.delivery_reach_time}}</p>-->
-                    <!--<p v-if="checkoutData.cart.is_deliver_by_fengniao">蜂鸟专送</p>-->
-                <!--</section>-->
-            <!--</section>-->
             <section class="pay_way container_style">
                 <header class="header_style">
                     <span>支付方式</span>
@@ -41,10 +34,6 @@
                         </svg>
                     </div>
                 </header>
-                <!--<section class="hongbo">-->
-                    <!--<span>红包</span>-->
-                    <!--<span>暂时只在饿了么 APP 中支持</span>-->
-                <!--</section>-->
             </section>
             <section class="food_list">
                 <header v-if="checkoutData.cart.restaurant_info">
@@ -53,7 +42,9 @@
                 </header>
                 <ul class="food_list_ul" v-if="checkoutData.cart.groups">
                     <li v-for="item in checkoutData.cart.groups[0]" :key="item.id" class="food_item_style">
-                        <p class="food_name ellipsis">{{item.name}}</p>
+                      <img class="food_image ellipsis"  :src="imgBaseUrl + image_path">
+
+                      <p class="food_name ellipsis">{{item.name}}</p>
                         <div class="num_price">
                             <span>x {{item.quantity}}</span>
                             <span>¥{{item.price}}</span>
@@ -68,7 +59,7 @@
                     </div>
                 </div>
                 <div class="food_item_style">
-                    <p class="food_name ellipsis">配送费</p>
+                    <p class="food_name ellipsis">物流费</p>
                     <div class="num_price">
                         <span></span>
                         <span>¥ {{checkoutData.cart.deliver_amount || 0}}</span>
@@ -85,21 +76,21 @@
                 <router-link :to='{path: "/confirmOrder/remark", query: {id: checkoutData.cart.id, sig: checkoutData.sig}}' class="header_style">
                     <span>订单备注</span>
                     <div class="more_type">
-                        <span class="ellipsis">{{remarkText||inputText? remarklist: '口味、偏好等'}}</span>
+                        <span class="ellipsis">{{remarkText||inputText? remarklist: '和卖家说的话'}}</span>
                         <svg class="address_empty_right">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use>
                         </svg>
                     </div>
                 </router-link>
-                <router-link :to="checkoutData.invoice.is_available? '/confirmOrder/invoice': ''" class="hongbo" :class="{support_is_available: checkoutData.invoice.is_available}">
-                    <span>发票抬头</span>
-                    <span>
-                        {{checkoutData.invoice.status_text}}
-                        <svg class="address_empty_right">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use>
-                        </svg>
-                    </span>
-                </router-link>
+                <!--<router-link :to="checkoutData.invoice.is_available? '/confirmOrder/invoice': ''" class="hongbo" :class="{support_is_available: checkoutData.invoice.is_available}">-->
+                    <!--<span>发票抬头</span>-->
+                    <!--<span>-->
+                        <!--{{checkoutData.invoice.status_text}}-->
+                        <!--<svg class="address_empty_right">-->
+                            <!--<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use>-->
+                        <!--</svg>-->
+                    <!--</span>-->
+                <!--</router-link>-->
             </section>
             <section class="confrim_order">
                 <p>待支付 ¥{{checkoutData.cart.total}}</p>
@@ -151,6 +142,7 @@
                 payWayId: 1, //付款方式
                 showAlert: false, //弹出框
                 alertText: null, //弹出框内容
+                image_path:null
             }
         },
         created(){
@@ -158,6 +150,7 @@
             this.geohash = this.$route.query.geohash;
             //获取上个页面传递过来的shopid值
             this.shopId = this.$route.query.shopId;
+            this.image_path = this.$route.query.image_path;
             this.INIT_BUYCART();
             this.SAVE_SHOPID(this.shopId);
             //获取当前商铺购物车信息
@@ -219,6 +212,7 @@
                                 sku_id: item.sku_id,
                                 specs: [item.specs],
                                 stock: item.stock,
+                                image_path:item.image_path
                             })
                         })
                     })
@@ -443,6 +437,16 @@
     .food_list{
         background-color: #fff;
         margin-top: .4rem;
+
+        .food_image{
+          padding: .7rem;
+          border-bottom: 0.025rem solid #f5f5f5;
+          @include wh(1.2rem, 1.2rem);
+          vertical-align: middle;
+          @include sc(.8rem, #333);
+
+        }
+
         header{
             padding: .7rem;
             border-bottom: 0.025rem solid #f5f5f5;
@@ -465,7 +469,7 @@
                 @include sc(.65rem, #666);
             }
             .food_name{
-                width: 11rem;
+                width: 9rem;
             }
             .num_price{
                 flex: 1;

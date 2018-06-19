@@ -11,7 +11,8 @@
                 <p>{{name}}</p>
                 <p>
                   <span>月售 {{month_sales}}单</span>
-                  <!--<span>售价 ¥{{goods.specfoods[0].price}}</span>-->
+                  <span>售价 ¥{{price}}</span>
+
                 </p>
                 <p>
                   <span>评论数 {{rating_count}}</span>
@@ -36,15 +37,55 @@
             </div>
           </section>
           <section class="gotopay" >
-            <router-link :class="{gotopay_acitvity:true}" :to="{path:'/confirmOrder', query:{geohash, shopId}}" class="gotopay_button_style"  >去结算</router-link>
-            <div  @click="addSpecs(goods)" :class="{cart_acitvity:true}"  class="addto_cart_button_style"  >加入购物车</div>
-
-
+            <router-link :class="{gotopay_acitvity:true}" :to="{path:'/order'}" class="gotopay_button_style"  v-if="cartFoodList.length<=0" >去结算</router-link>
+            <router-link :class="{gotopay_acitvity:true}" :to="{path:'/confirmOrder', query:{geohash, shopId,image_path}}" class="gotopay_button_style"  v-else >去结算</router-link>
+            <div  @click="addSpecs()" :class="{cart_acitvity:true}"  class="addto_cart_button_style"  >加入购物车</div>
           </section>
+
+          <transition name="toggle-cart">
+            <section class="cart_food_list" v-show="showCartList&&cartFoodList.length">
+              <header>
+                <h4>购物车</h4>
+                <div @click="clearCart">
+                  <svg>
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart-remove"></use>
+                  </svg>
+                  <span class="clear_cart">清空</span>
+                </div>
+              </header>
+              <section class="cart_food_details" id="cartFood">
+                <ul>
+                  <li v-for="(item, index) in cartFoodList" :key="index" class="cart_food_li">
+                    <div class="cart_list_num">
+                      <p class="ellipsis">{{item.name}}</p>
+                      <p class="ellipsis">{{item.specs}}</p>
+                    </div>
+                    <div class="cart_list_price">
+                      <span>¥</span>
+                      <span>{{item.price}}</span>
+                    </div>
+                    <section class="cart_list_control">
+                                            <span @click="removeOutCart(item.category_id, item.item_id, item.food_id, item.name, item.price, item.specs)">
+                                                <svg>
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart-minus"></use>
+                                                </svg>
+                                            </span>
+                      <span class="cart_num">{{item.num}}</span>
+                      <svg class="cart_add" @click="addToCart(item.category_id, item.item_id, item.food_id, item.name, item.price, item.specs)">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart-add"></use>
+                      </svg>
+                    </section>
+                  </li>
+                </ul>
+              </section>
+            </section>
+          </transition>
+          <transition name="fade">
+            <div class="screen_cover" v-show="showCartList&&cartFoodList.length" @click="toggleCartList"></div>
+          </transition>
 
 
         </section>
-
 
     </div>
 </template>
@@ -68,13 +109,14 @@
                 rating: null,
                 rating_count: null,
                 satisfy_rate: null,
-                food_id: null,
+                item_id: null,
                 goods: null,
                 shopId: null,
+                price:null,
                 imgBaseUrl,
                 shopDetailData: null, //商铺详情
                 menuList: [], //食品列表
-
+                good:[],
                 totalPrice: 0, //总共价格
                 cartFoodList: [], //购物车商品列表
                 showCartList: false,//显示购物车列表
@@ -87,6 +129,7 @@
                 windowHeight: null, //屏幕的高度
                 elLeft: 0, //当前点击加按钮在网页中的绝对top值
                 elBottom: 0, //当前点击加按钮在网页中的绝对left值
+
 
             }
         },
@@ -108,6 +151,8 @@
             this.goods = this.$route.query.goods;
             this.shopId = this.$route.query.shopId;
             this.geohash = this.$route.query.geohash;
+            this.item_id = this.$route.query.item_id;
+            this.price = this.$route.query.price;
             this.INIT_BUYCART();
         },
         mixins: [getImgPath],
@@ -172,8 +217,10 @@
             this.shopDetailData = await shopDetails(this.shopId, this.latitude, this.longitude);
             //获取商铺食品列表
             // this.menuList = await foodMenu(1);
-            if(this.goods.category_id){
-              this.goods = await getFoodDetal(this.shopId,this.food_id);
+
+            this.good = await getFoodDetal(this.shopId,this.item_id);
+            if(this.good){
+              this.goods = this.good[0];
             }
 
             this.RECORD_SHOPDETAIL(this.shopDetailData)
@@ -182,30 +229,38 @@
             this.hideLoading();
           },
 
+          //加入购物车，所需7个参数，商铺id，食品分类id，食品id，食品规格id，食品名字，食品价格，食品规格
+          addToCart(category_id, item_id, food_id, name, price, specs){
+            this.ADD_CART({shopid: this.shopId, category_id, item_id, food_id, name, price, specs});
+          },
+          //移出购物车，所需7个参数，商铺id，食品分类id，食品id，食品规格id，食品名字，食品价格，食品规格
+          removeOutCart(category_id, item_id, food_id, name, price, specs){
+            this.REDUCE_CART({shopid: this.shopId, category_id, item_id, food_id, name, price, specs});
+          },
 
           //多规格商品加入购物车
+          addSpecs(){
 
 
 
-          addSpecs(goods){
+            var category_id = this.goods.category_id;
+            var item_id = this.goods.specfoods[0].item_id;
 
-            var category_id = goods.category_id;
-            var item_id = goods.specfoods[0].item_id;
-
-            var food_id = goods.specfoods[0].food_id;
-            var name =  goods.specfoods[0].name;
-            var price =  goods.specfoods[0].price;
+            var food_id = this.goods.specfoods[0].food_id;
+            var name =  this.goods.specfoods[0].name;
+            var price =  this.goods.specfoods[0].price;
             var specs = "";
-            if( goods.specifications.length>0){
-              specs = goods.specifications[0].values[0];
+            if( this.goods.specifications.length>0){
+              specs = this.goods.specifications[0].values[0];
             }
 
-            var packing_fee =  goods.specfoods[0].packing_fee;
-            var sku_id =  goods.specfoods[0].sku_id;
-            var stock =  goods.specfoods[0].stock;
+            var packing_fee =  this.goods.specfoods[0].packing_fee;
+            var sku_id =  this.goods.specfoods[0].sku_id;
+            var stock =  this.goods.specfoods[0].stock;
+            var image_path = this.goods.image_path;
 
-            this.ADD_CART({shopid: this.shopId, category_id, item_id, food_id, name, price, specs, packing_fee, sku_id, stock});
-            // this.showChooseList();
+            this.ADD_CART({shopid: this.shopId, category_id, item_id, food_id, name, price, specs, packing_fee, sku_id, stock,image_path});
+            this.showChooseList();
           },
 
           /**
@@ -245,6 +300,7 @@
                         this.cartFoodList[cartFoodNum].price = foodItem.price;
                         this.cartFoodList[cartFoodNum].name = foodItem.name;
                         this.cartFoodList[cartFoodNum].specs = foodItem.specs;
+                        this.cartFoodList[cartFoodNum].image_path= foodItem.image_path;
                         cartFoodNum ++;
                       }
                     }
@@ -278,11 +334,13 @@
           },
 
           //显示规格列表
-          // showChooseList(goods){
-          //
-          //   this.showSpecs = !this.showSpecs;
-          //   this.specsIndex = 0;
-          // },
+          showChooseList(){
+            // if (goods) {
+            //   this.choosedFoods = goods;
+            // }
+            this.showSpecs = !this.showSpecs;
+            this.specsIndex = 0;
+          },
 
           //监听圆点是否进入购物车
           listenInCart(){
@@ -501,6 +559,126 @@
       .cart_acitvity{
         background-color: #ff461d;
       }
+    }
+
+    .cart_food_list{
+      position: fixed;
+      width: 100%;
+      padding-bottom: 2rem;
+      z-index: 12;
+      bottom: 0;
+      left: 0;
+      background-color: #fff;
+      header{
+        @include fj;
+        align-items: center;
+        padding: .3rem .6rem;
+        background-color: #eceff1;
+        svg{
+          @include wh(.6rem,.6rem);
+          vertical-align: middle;
+        }
+        h4{
+          @include sc(.7rem, #666);
+        }
+        .clear_cart{
+          @include sc(.6rem, #666);
+        }
+      }
+      .cart_food_details{
+        background-color: #fff;
+        max-height: 20rem;
+        overflow-y: auto;
+        .cart_food_li{
+          @include fj;
+          padding: .6rem .5rem;
+          .cart_list_num{
+            width: 55%;
+            p:nth-of-type(1){
+              @include sc(.7rem, #666);
+              font-weight: bold;
+            }
+            p:nth-of-type(2){
+              @include sc(.4rem, #666);
+            }
+          }
+          .cart_list_price{
+            font-size: 0;
+            span:nth-of-type(1){
+              @include sc(.6rem, #f60);
+              font-family: Helvetica Neue,Tahoma;
+
+            }
+            span:nth-of-type(2){
+              @include sc(.7rem, #f60);
+              font-family: Helvetica Neue,Tahoma;
+              font-weight: bold;
+            }
+          }
+          .cart_list_control{
+            display: flex;
+            align-items: center;
+            span{
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            svg{
+              @include wh(.9rem, .9rem);
+              fill: #3190e8;
+            }
+            .specs_reduce_icon{
+              fill: #999;
+            }
+            .cart_num{
+              @include sc(.65rem, #666);
+              min-width: 1rem;
+              text-align: center;
+              font-family: Helvetica Neue,Tahoma;
+            }
+          }
+        }
+      }
+    }
+
+
+    .screen_cover{
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(0,0,0,.3);
+      z-index: 11;
+    }
+
+    .fade-enter-active, .fade-leave-active {
+      transition: opacity .5s;
+    }
+    .fade-enter, .fade-leave-active {
+      opacity: 0;
+    }
+    .fade-choose-enter-active, .fade-choose-leave-active {
+      transition: opacity .5s;
+    }
+    .fade-choose-leave, .fade-choose-leave-active {
+      display: none;
+    }
+    .fade-choose-enter, .fade-choose-leave-active {
+      opacity: 0;
+    }
+    .router-slid-enter-active, .router-slid-leave-active {
+      transition: all .4s;
+    }
+    .router-slid-enter, .router-slid-leave-active {
+      transform: translate3d(2rem, 0, 0);
+      opacity: 0;
+    }
+    .toggle-cart-enter-active, .toggle-cart-leave-active {
+      transition: all .3s ease-out;
+    }
+    .toggle-cart-enter, .toggle-cart-leave-active {
+      transform: translateY(100%);
     }
 
 </style>

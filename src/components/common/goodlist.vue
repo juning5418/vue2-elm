@@ -4,7 +4,7 @@
 
       <!--<router-link  :to="{path: 'shop/foodDetail', query:{image_path:foods.image_path, description: foods.description, month_sales: foods.month_sales, name: foods.name, rating: foods.rating, rating_count: foods.rating_count, satisfy_rate: foods.satisfy_rate, foods, shopId}}" v-for="(foods,foodindex) in goodListArr" :key="foodindex"  tag='li' :key="foods.id" class="shop_li">-->
 
-      <router-link :to="{path: 'itemDetail', query:{shopId:1,geohash,item_id:item.item_id,image_path:item.image_path, description: item.description, month_sales: item.month_sales, name: item.name, rating: item.rating, rating_count: item.rating_count, satisfy_rate: item.satisfy_rate, goods: item}}" v-for="item in goodListArr" tag='li' :key="item.id" class="shop_li">
+      <router-link :to="{path: 'itemDetail', query:{shopId:1,geohash,price:item.specfoods[0].price,item_id:item.item_id,image_path:item.image_path, description: item.description, month_sales: item.month_sales, name: item.name, rating: item.rating, rating_count: item.rating_count, satisfy_rate: item.satisfy_rate, goods: item}}" v-for="item in goodListArr" tag='li' :key="item.id" class="shop_li">
 				<section>
 					<img :src="imgBaseUrl + item.image_path" class="shop_img">
 				</section>

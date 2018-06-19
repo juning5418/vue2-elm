@@ -2,11 +2,11 @@
   	<div class="paddingTop search_page">
         <head-top head-title="搜索" goBack="true"></head-top>
         <form class="search_form">
-            <input type="search" name="search" placeholder="请输入商家或美食名称" class="search_input" v-model="searchValue" @input="checkInput">
+            <input type="search" name="search" placeholder="名称" class="search_input" v-model="searchValue" @input="checkInput">
             <input type="submit" name="submit" class="search_submit" @click.prevent="searchTarget('')">
         </form>
         <section v-if="restaurantList.length">
-            <h4 class="title_restaurant">商家</h4>
+            <h4 class="title_restaurant">商品列表</h4>
             <ul class="list_container">
                 <router-link :to="{path:'/shop', query:{id:item.id}}" tag="li" v-for="item in restaurantList" :key="item.id" class="list_li">
                     <section class="item_left">
@@ -22,14 +22,14 @@
                                     <text x="3.5" y="9" style="fill:#FF6000;font-size:9;font-weight:bold;">支付</text>
                                 </svg>
                             </p>
-                            <p>月售 {{item.month_sales||item.recent_order_num}} 单</p>
-                            <p>{{item.delivery_fee||item.float_minimum_order_amount}} 元起送 / 距离{{item.distance}}</p>
+                            <!--<p>月售 {{item.month_sales||item.recent_order_num}} 单</p>-->
+                            <!--<p>{{item.delivery_fee||item.float_minimum_order_amount}} 元起送 / 距离{{item.distance}}</p>-->
                         </div>
                         <ul class="item_right_detail">
                             <li v-for="activities in item.restaurant_activity" :key="activities.id">
                                 <span :style="{backgroundColor: '#' + activities.icon_color}" class="activities_icon">{{activities.icon_name}}</span>
                                 <span>{{activities.name}}</span>
-                                <span class="only_phone">(手机客户端专享)</span>
+                                <!--<span class="only_phone">(手机客户端专享)</span>-->
                             </li>
                         </ul>
                     </section>
@@ -61,6 +61,7 @@ import {searchRestaurant} from '../../service/getData'
 import {imgBaseUrl} from '../../config/env'
 import {getStore, setStore} from '../../config/mUtils'
 
+
 export default {
 	data(){
         return {
@@ -74,7 +75,7 @@ export default {
         }
     },
     created(){
-       
+
     },
     mounted(){
         this.geohash = this.$route.params.geohash;
@@ -93,7 +94,7 @@ export default {
             if (historyValue) {
                 this.searchValue = historyValue;
             }else if (!this.searchValue) {
-                return 
+                return
             }
             //隐藏历史记录
             this.showHistory = false;
@@ -105,7 +106,7 @@ export default {
              * 如果没有则新增，如果有则不做重复储存，判断完成后进入下一页
              */
             let history = getStore('searchHistory');
-            if (history) { 
+            if (history) {
                 let checkrepeat = false;
                 this.searchHistory = JSON.parse(history);
                 this.searchHistory.forEach(item => {
@@ -127,7 +128,7 @@ export default {
                 this.showHistory = true; //显示历史记录
                 this.restaurantList = []; //清空搜索结果
                 this.emptyResult = false; //隐藏搜索为空提示
-            } 
+            }
         },
         //点击删除按钮，删除当前历史记录
         deleteHistory(index){
@@ -146,7 +147,7 @@ export default {
 
 <style lang="scss" scoped>
     @import '../../style/mixin';
-    
+
     .search_page{
         margin-bottom: 2rem;
     }
