@@ -25,9 +25,9 @@
       </nav>
 
       <div class="image-type">
-        <img src="http://localhost:8000/img/163c98254843.png" width="32%"/>
-        <img src="http://localhost:8000/img/163c98254843.png" width="32%"/>
-        <img src="http://localhost:8000/img/163c98254843.png" width="32%"/>
+        <img src="http://h5.heptalcc.com/img/163c98254843.png" width="32%"/>
+        <img src="http://h5.heptalcc.com/img/163c98254843.png" width="32%"/>
+        <img src="http://h5.heptalcc.com/img/163c98254843.png" width="32%"/>
       </div>
 
 
