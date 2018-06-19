@@ -156,6 +156,7 @@ export default {
     margin-top: 1.4rem;
     display:block;
     margin-bottom:fill ;
+    text-align: center
   }
 
 	.shop_list_container{
