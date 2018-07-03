@@ -130,7 +130,10 @@
                         </div>
                       </router-link>
                       <div class="bp-bottom">
+                        <router-link :to="{path: '/productDetail/'+item.item_id}" >
+
                         <button class="btn button-add-cart">购买</button>
+                          </router-link>
                       </div>
                     </div>
                   </div>

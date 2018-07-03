@@ -26,9 +26,9 @@
 
 
       <div class="header-icon-menu cart-item-wrap" >
-        <a href="shopping-cart.html">
+        <a href="#/shoppingCart">
           <i class="fas fa-shopping-cart"></i>
-          <span class="cart-item">4</span>
+          <!--<span class="cart-item">4</span>-->
         </a>
       </div>
 

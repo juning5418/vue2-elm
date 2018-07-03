@@ -13,6 +13,7 @@ const addressProfile = r => require.ensure([], () => r(require('../page/profile/
 const addAddressProfile = r => require.ensure([], () => r(require('../page/profile/addAddressProfile')), 'addAddressProfile')
 const addAddressDetail = r => require.ensure([], () => r(require('../page/profile/addAddressDetail')), 'addAddressDetail')
 
+const shoppingCart = r => require.ensure([], () => r(require('../page/cart/shoppingCart')), 'shoppingCart')
 
 
 // const info = r => require.ensure([], () => r(require('../page/profile/children/info')), 'info')
@@ -86,6 +87,12 @@ export default [{
         //     path: '/city/:cityid',
         //     component: city
         // },
+
+      {
+        path: '/shoppingCart',
+        component: shoppingCart,
+        meta: { keepAlive: true },
+      },
         //所有商铺列表页
         {
             path: '/msite',

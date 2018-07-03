@@ -66,34 +66,32 @@
         <div class="container">
           <div class="row">
             <div class="col s3">
-              <div class="qty-qty">数量</div>
+              <div class="qty-qty" >数量</div>
             </div>
             <div class="col s5">
               <div class="qty-prc">
                 <div class="quantity">
-                  <input type="number" min="1" max="9999" step="1" value="1"></div>
+                  <input type="number" min="1" max="9999" step="1" v-model="number">
+                  <div class="quantity-button quantity-up"  >+</div>
+                  <div class="quantity-button quantity-down" >-</div></div>
               </div>
             </div>
             <div class="col s4">
-              <div class="qty-buy">
-                <button  class="btn button-add-cart">购买</button>
+              <div class="qty-buy" >
+                <button  class="btn button-add-cart" @click="buy" >购买</button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
     <foot-guide></foot-guide>
-
   </div>
 </template>
 
 
 <script>
   import {mapMutations} from 'vuex'
-
-
   import headTop from 'src/components/header/head'
   import footGuide from 'src/components/footer/foot'
   import left from 'src/components/common/left'
@@ -105,6 +103,7 @@
     data() {
       return{
         imgBaseUrl,
+        number:1,
         backImageDetail:'url(' + require('../../images/red/cabbage_PNG8821.jpg') + ')',
         itemId:null,
         good:{
@@ -114,13 +113,19 @@
           ],
           description:null,
           image_path:null
-        }
+        },
+        min:1,
+        max:999
       }
     },
 
+    created(){
+      this.number=1;
+    },
 
     mounted() {
       this.shopId =1;
+      // this.number=1;
       $(document).ready(function(){
         $('.carousel').carousel();
       });
@@ -159,9 +164,9 @@
       })
 
       /*=================== QTY INPUT ===================*/
-      $('<div class="quantity-button quantity-up">+</div><div class="quantity-button quantity-down">-</div>').insertAfter('.quantity input');
+      // $('<div class="quantity-button quantity-up">+</div><div class="quantity-button quantity-down">-</div>').insertAfter('.quantity input');
       $('.quantity').each(function() {
-        var spinner = jQuery(this),
+          var spinner = jQuery(this),
           input = spinner.find('input[type="number"]'),
           btnUp = spinner.find('.quantity-up'),
           btnDown = spinner.find('.quantity-down'),
@@ -175,6 +180,8 @@
           } else {
             var newVal = oldValue + 1;
           }
+          this.number = newVal;
+          // alert(this.number);
           spinner.find("input").val(newVal);
           spinner.find("input").trigger("change");
         });
@@ -186,14 +193,12 @@
           } else {
             var newVal = oldValue - 1;
           }
+          this.number = newVal;
           spinner.find("input").val(newVal);
           spinner.find("input").trigger("change");
         });
 
       });
-
-
-
 
     },
 
@@ -203,22 +208,34 @@
       footGuide,
       left,
       right
-
-
     },
     computed: {
 
     },
     methods: {
       ...mapMutations([
-
+        'ADD_CART'
       ]),
 
+      buy:function () {
 
+        $('.quantity').each(function() {
+          var spinner = jQuery(this);
+          var input = spinner.find('input[type="number"]');
+          var numberValue = parseFloat(input.val());
+          this.number = numberValue;
+
+        });
+
+        this.ADD_CART({shopid: this.shopId, item_id:this.itemId, name:this.good.name, price:this.good.specfoods[0].price, number:this.number,image_path:this.good.image_path});
+
+      }
 
     },
     watch: {
-
+      // number:function(val,oldval){
+      //   console.log(this.number)
+      // }
     }
 
 
