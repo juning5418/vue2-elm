@@ -8,6 +8,10 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=online node build/dev-server.js",
     "local": "cross-env NODE_ENV=local node build/dev-server.js",
+    "start": "cross-env NODE_ENV=local pm2 start node build/dev-server.js --name 'vue2-elm --port 8000'",
+    "stop": "cross-env NODE_ENV=local pm2 stop node build/dev-server.js --name 'vue2-elm --port 8000'",
+    "restart": "cross-env NODE_ENV=local pm2 restart node build/dev-server.js --name 'vue2-elm --port 8000'",
+
     "build": "node build/build.js"
   },
   "dependencies": {
@@ -20,7 +24,8 @@
     "vuex": "^2.0.0",
     "jquery": "^3.3.1",
     "hammerjs":"^2.0.8",
-    "materialize-css":"^0.100.2"
+    "materialize-css":"^0.100.2",
+    "pm2": "^2.8.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
