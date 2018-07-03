@@ -3,7 +3,7 @@
         <span class="rem_time" style="color: orange;border-width: 1px;border-style: solid;border-color: orange;" @click="gotoPay">
 	       {{remaining}}
         </span>
-        <alert-tip v-if="showAlert" @closeTip="showAlert = false" :alertText="alertText"></alert-tip>  
+        <alert-tip v-if="showAlert" @closeTip="showAlert = false" :alertText="alertText"></alert-tip>
     </div>
 </template>
 
@@ -74,7 +74,7 @@
 </script>
 
 <style lang="scss" scoped>
-    @import 'src/style/mixin';
+    //@import 'src/style/mixin';
 	.page{
         display: inline-block;
         .rem_time{

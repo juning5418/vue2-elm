@@ -101,7 +101,7 @@
 </script>
 
 <style lang="scss" scoped>
-    @import '../../style/mixin';
+    /*@import '../../style/mixin';*/
 	.cart_module{
         .add_icon{
             position: relative;

@@ -1,57 +1,8 @@
 <template>
-    <!--<div class="loginContainer">-->
-        <!--<head-top :head-title="loginWay? '登录':'密码登录'" goBack="true">-->
-            <!--&lt;!&ndash; <div slot="changeLogin" class="change_login" @click="changeLoginWay">{{loginWay? "密码登录":"短信登录"}}</div> &ndash;&gt;-->
-        <!--</head-top>-->
-        <!--<form class="loginForm" v-if="loginWay">-->
-            <!--<section class="input_container phone_number">-->
-                <!--<input type="text" placeholder="账号密码随便输入" name="phone" maxlength="11" v-model="phoneNumber">-->
-                <!--<button @click.prevent="getVerifyCode" :class="{right_phone_number:rightPhoneNumber}" v-show="!computedTime">获取验证码</button>-->
-                <!--<button  @click.prevent v-show="computedTime">已发送({{computedTime}}s)</button>-->
-            <!--</section>-->
-            <!--<section class="input_container">-->
-                <!--<input type="text" placeholder="验证码" name="mobileCode" maxlength="6" v-model="mobileCode">-->
-            <!--</section>-->
-        <!--</form>-->
-        <!--<form class="loginForm" v-else>-->
-            <!--<section class="input_container">-->
-                <!--<input type="text" placeholder="账号" v-model.lazy="userAccount">-->
-            <!--</section>-->
-            <!--<section class="input_container">-->
-                <!--<input v-if="!showPassword" type="password" placeholder="密码"  v-model="passWord">-->
-                <!--<input v-else type="text" placeholder="密码"  v-model="passWord">-->
-                <!--<div class="button_switch" :class="{change_to_text: showPassword}">-->
-                    <!--<div class="circle_button" :class="{trans_to_right: showPassword}" @click="changePassWordType"></div>-->
-                    <!--<span>abc</span>-->
-                    <!--<span>...</span>-->
-                <!--</div>-->
-            <!--</section>-->
-            <!--<section class="input_container captcha_code_container">-->
-                <!--<input type="text" placeholder="验证码" maxlength="4" v-model="codeNumber">-->
-                <!--<div class="img_change_img">-->
-                    <!--<img v-show="captchaCodeImg" :src="captchaCodeImg">-->
-                    <!--<div class="change_img" @click="getCaptchaCode">-->
-                        <!--<p>看不清</p>-->
-                        <!--<p>换一张</p>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</section>-->
-        <!--</form>-->
-        <!--<p class="login_tips">-->
-            <!--温馨提示：未注册过的账号，登录时将自动注册-->
-        <!--</p>-->
-        <!--<p class="login_tips">-->
-            <!--注册过的用户可凭账号密码登录-->
-        <!--</p>-->
-        <!--<div class="login_container" @click="mobileLogin">登录</div>-->
-        <!--<router-link to="/forget" class="to_forget" v-if="!loginWay">重置密码？</router-link>-->
-        <!--<alert-tip v-if="showAlert" :showHide="showAlert" @closeTip="closeTip" :alertText="alertText"></alert-tip>-->
-    <!--</div>-->
 
 
   <div>
     <head-top signin-up='msite'>
-
 
     </head-top>
 
@@ -67,7 +18,7 @@
           <div class="row">
             <div class="col s12">
               <div class="section-title">
-                <span class="theme-secondary-color">登入界面</span>
+                <span class="theme-secondary-color">注册</span>
               </div>
             </div>
           </div>
@@ -86,6 +37,12 @@
                 </div>
               </div>
               <div class="row">
+                <div class="input-field col s12 m12  ">
+                  <input id="repassword" type="password" v-model="repassWord" class="validate">
+                  <label for="repassword">确认密码</label>
+                </div>
+              </div>
+              <div class="row">
                 <div class="input-field col s8 m8 l8 ">
                   <label for="codeNumber">验证码</label>
                   <input id="codeNumber" type="text"  maxlength="4" v-model="codeNumber">
@@ -95,44 +52,12 @@
                     <img v-show="captchaCodeImg" :src="captchaCodeImg" @click="getCaptchaCode">
                   </div>
                 </div>
-
               </div>
-
-
               <div class="row">
                 <div class="input-field col s12 m12 l12  center">
-                  <input class="waves-effect waves-light btn" value="登入" type="submit" @click="mobileLogin"></div>
+                  <input class="waves-effect waves-light btn" value="注册" type="submit" @click="mobileLogin"></div>
               </div>
             </form>
-          </div>
-          <div class="row fp-text">
-            <div class="col s12">
-              <div class="forgot-password-link">
-                <a href="#">忘记密码</a>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col s12">
-              <div class="or-line">
-                <div class="ol-or">OR</div>
-                <div class="ol-line"></div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col s12" >
-              <div class="sign-in-sosmed">
-                <div class="sign-in-icon sii-weixin">
-                  <i class="fab fa-weixin"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col s12 center">
-              还没有账号吗 ? <a href="#/regist">马上注册</a>
-            </div>
           </div>
         </div>
       </div>
@@ -167,6 +92,7 @@
                 userInfo: null, //获取到的用户信息
                 userAccount: null, //用户名
                 passWord: null, //密码
+                repassWord:null,
                 captchaCodeImg: null, //验证码地址
                 codeNumber: null, //验证码
                 showAlert: false, //显示提示组件
@@ -296,9 +222,12 @@
                 }else if(!this.codeNumber){
                     Materialize.toast('请输入验证码', 4000) // 4000 is the duration of the toast
                     return
+                }else if(this.passWord!=this.repassWord){
+                  Materialize.toast('两次密码不一致', 4000) // 4000 is the duration of the toast
+                  return
                 }
                 //用户名登录
-                this.userInfo = await accountLogin(this.userAccount, this.passWord, this.codeNumber,1);
+                this.userInfo = await accountLogin(this.userAccount, this.passWord, this.codeNumber,2);
                 // }
                 //如果返回的值不正确，则弹出提示框，返回的值正确则返回上一页
                 if (!this.userInfo.user_id) {
@@ -308,8 +237,8 @@
                     if (!this.loginWay) this.getCaptchaCode();
                 }else{
                     this.RECORD_USERINFO(this.userInfo);
-                  // this.$router.push({name: 'msite'});
-                  this.$router.go(-1);
+                    // this.$router.push({name: 'msite'});
+                    this.$router.go(-1);
 
                 }
             },

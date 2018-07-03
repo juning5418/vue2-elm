@@ -1,180 +1,325 @@
 <template>
     <div>
     	<head-top signin-up='msite'>
-    		<router-link :to="'/search/geohash'" class="link_search" slot="search">
-	    		<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" version="1.1">
-	    			<circle cx="8" cy="8" r="7" stroke="rgb(255,255,255)" stroke-width="1" fill="none"/>
-	    			<line x1="14" y1="14" x2="20" y2="20" style="stroke:rgb(255,255,255);stroke-width:2"/>
-	    		</svg>
-    		</router-link>
-        <router-link to="/home" slot="msite-title" class="msite_title">
-          <span class="title_text ellipsis">{{msiteTitle}}</span>
-        </router-link>
-    	</head-top>
 
-    	<nav class="msite_nav">
-    		<div class="swiper-container" v-if="banners.length">
-		        <div class="swiper-wrapper">
-		            <div class="swiper-slide" v-for="banner in banners" >
-                  <img :src="banner" alt="" width="100%" >
-		            </div>
-            </div>
-            <div class="swiper-pagination"></div>
-        </div>
-		    <img src="../../images/fl.svg" class="fl_back animation_opactiy" v-else>
+
+
+      </head-top>
+
+      <nav>
+          <left></left>
+          <right></right>
       </nav>
 
-      <div class="image-type">
-        <img src="http://h5.heptalcc.com/img/163c98254843.png" width="30%"/>
-        <img src="http://h5.heptalcc.com/img/163c98254843.png" width="30%"/>
-        <img src="http://h5.heptalcc.com/img/163c98254843.png" width="30%"/>
+
+      <!-- MAIN SLIDER -->
+
+      <div class="main-slider" data-indicators="true">
+        <div class="carousel carousel-slider " data-indicators="true"  v-for="(item, index) in banners">
+          <a class="carousel-item" >
+
+            <img :src="imgBaseUrl + item.image" alt="slider">
+            <!--<img src="../../images/red/slide2.jpg" alt="slider">-->
+          </a>
+        </div>
       </div>
 
 
-    	<div class="shop_list_container">
-	    	<header class="shop_header">
-	    		<svg class="shop_icon">
-	    			<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shop"></use>
-	    		</svg>
-	    		<span class="shop_header_title">商品</span>
-	    	</header>
-	    	<good-list v-if="hasGetData" :geohash="geohash"></good-list>
-    	</div>
+      <!-- CATEGORY -->
+      <div class="section home-category">
+        <div class="container">
+          <div class="row">
+            <div class="col s12">
+              <div class="section-title">
+                <span class="theme-secondary-color">产品</span> 活动
+              </div>
+            </div>
+          </div>
+          <div class="row icon-service">
+            <div class="col s4 m4 l4">
+              <div class="content">
+                <div class="in-content">
+                  <div class="in-in-content">
+                    <img src="../../images/red/c-diet.png" alt="category">
+                    <h5>日常</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col s4 m4 l4">
+              <div class="content">
+                <div class="in-content">
+                  <div class="in-in-content">
+                    <img src="../../images/red/c-groceries.png" alt="category">
+                    <h5>礼物</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col s4 m4 l4">
+              <div class="content">
+                <div class="in-content">
+                  <div class="in-in-content">
+                    <img src="../../images/red/c-apple.png" alt="category">
+                    <h5>活动</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- END CATEGORY -->
+      <!-- POPULER SEARCH -->
+      <div class="section populer-search">
+        <div class="container">
+          <div class="row row-title">
+            <div class="col s12">
+              <div class="section-title">
+                <span class="theme-secondary-color">热搜</span> 名词
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <div class="list-tag-word"  v-for="(item, index) in keywords">
+                <a class="tag-word">{{item.name}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END POPULER SEARCH -->
+      <!-- FEATURED PRODUCT -->
+      <div class="section product-item si-featured">
+        <div class="container">
+          <div class="row row-title">
+            <div class="col s12">
+              <div class="section-title">
+                <span class="theme-secondary-color">特色</span> 产品
+              </div>
+            </div>
+          </div>
+          <div class="row slick-product">
+            <div class="col s12">
+
+
+
+              <div id="featured-product" class="featured-product">
+
+
+                <div v-for="(item, index) in foods" >
+                  <div class="col-slick-product" >
+                    <div class="box-product">
+                      <router-link :to="{path: '/productDetail/'+item.item_id}" >
+                        <div class="bp-top">
+                          <div class="product-list-img">
+                            <div class="pli-one">
+                              <div class="pli-two">
+
+                                <img :src="imgBaseUrl + item.image_path" alt="img">
+                                <!--<img src="../../images/red/carrot_PNG4978.jpg" alt="img">-->
+                              </div>
+                            </div>
+                          </div>
+                          <h5><a href="">{{item.name}}</a></h5>
+                          <div class="item-info">{{item.description}}</div>
+                          <div class="price">￥{{item.specfoods[0].price}}</div>
+                          <div class="stock-item">{{item.stock}}</div>
+                        </div>
+                      </router-link>
+                      <div class="bp-bottom">
+                        <button class="btn button-add-cart">购买</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+              <div class="more-product-list">
+                <a class="more-btn" href="#/productList">更多 ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- SUBSCRIBE -->
+      <div class="section subscribe">
+        <div class="container">
+          <div class="row">
+            <div class="col s12">
+              <!--<div class="section-title">SUBSCRIBE</div>-->
+              <!--<p class="center">Get Your Groceries delivered from local stores</p>-->
+              <!--<div class="mail-subscribe-box">-->
+                <!--<input class="form-control" name="user-email" placeholder="Enter email address" value="" type="email">-->
+                <!--<i class="fa fa-angle-right"></i>-->
+              <!--</div>-->
+            </div>
+          </div>
+        </div>
+        <div class="bg-subscribe" style="background-image: url(../../static/img/bg-profile.jpg);">
+        </div>
+      </div>
+      <!-- END SUBSCRIBE -->
 
     	<foot-guide></foot-guide>
     </div>
 </template>
 
+
 <script>
 import {mapMutations} from 'vuex'
-// import {imgBaseUrl} from 'src/config/env'
 import headTop from 'src/components/header/head'
-import footGuide from 'src/components/footer/footGuide'
-import goodList from 'src/components/common/goodlist'
-import {msiteAddress, cityGuess} from 'src/service/getData'
-import 'src/plugins/swiper.min.js'
-import 'src/style/swiper.min.css'
+import footGuide from 'src/components/footer/foot'
+import left from 'src/components/common/left'
+import right from 'src/components/common/right'
+import {getBanners,getKeywords,getFoods} from 'src/service/getData'
+import {imgBaseUrl} from 'src/config/env'
+
+
 
 export default {
 	data(){
         return {
-        	geohash: '', // city页面传递过来的地址geohash
+          imgBaseUrl,
+          geohash: '', // city页面传递过来的地址geohash
             msiteTitle: '请选择地址...', // msite页面头部标题
             hasGetData: false, //是否已经获取地理位置数据，成功之后再获取商铺列表信息
-            imgBaseUrl: 'https://image.woarehere.com', //图片域名地址
-            banners: ['http://imgs-qn.iliangcang.com/ware/sowhatimg/ware/orig/2/30/30318.jpg',
-            'http://imgs-qn.iliangcang.com/ware/sowhatimg/ware/orig/2/30/30318.jpg',
-              'http://imgs-qn.iliangcang.com/ware/sowhatimg/ware/orig/2/30/30318.jpg']
+            // imgBaseUrl: 'https://image.woarehere.com', //图片域名地址
+            banners:[],
+          keywords:[],
+          foods:[]
+            // banners: ['http://h5.heptalcc.com/img/163c98254843.png',
+            // 'http://h5.heptalcc.com/img/163c98254843.png'],
         }
     },
-    async beforeMount(){
-      if (!this.$route.query.geohash) {
-        const address = await cityGuess();
-        this.geohash = address.latitude + ',' + address.longitude;
-      }else{
-        this.geohash = this.$route.query.geohash
-      }
-      //保存geohash 到vuex
-      this.SAVE_GEOHASH(this.geohash);
-      //获取位置信息
-      let res = await msiteAddress(this.geohash);
-      this.msiteTitle = res.name;
-      // 记录当前经度纬度
-      this.RECORD_ADDRESS(res);
 
-      this.hasGetData = true;
-    },
+
+
     mounted(){
+
+      getBanners().then(res => {
+        let resLength = res.length;
+        let resArr = [...res]; // 返回一个新的数组
+        // let foodArr = [];
+        // for (let i = 0, j = 0; i < resLength; i += 8, j++) {
+        //   foodArr[j] = resArr.splice(0, 8);
+        // }
+        this.banners = resArr;
+      }).then(() => {
+        /*=================== CAROUSEL SLIDER  ===================*/
+        $('.carousel.carousel-slider').carousel({fullWidth: true},setTimeout(autoplay, 4500));
+        function autoplay() {
+          $('.carousel').carousel('next');
+          setTimeout(autoplay, 4500);
+        }
+      })
+
+      getKeywords().then(res => {
+        let resLength = res.length;
+        let resArr = [...res]; // 返回一个新的数组
+        this.keywords = resArr;
+      }).then(() => {
+
+      })
+
+
+      getFoods().then(res => {
+        let resLength = res.length;
+        let resArr = [...res]; // 返回一个新的数组
+        this.foods = resArr;
+      }).then(() => {
+        /*=================== SLICK CAROUSEL FEATURED PRODUCT ===================*/
+        $("#featured-product").slick({
+          infinite: true,
+          slidesToShow: 2,
+          slidesToScroll: 2
+        });
+
+        /*=================== SLICK CAROUSEL POPULER PRODUCT ===================*/
+        $("#populer-product").slick({
+          infinite: true,
+          slidesToShow: 2,
+          slidesToScroll: 2
+        });
+
+        /*=================== SLICK CAROUSEL PRODUCT IMAGE ===================*/
+        $("#product-image").slick({
+          arrows: false,
+          dots: true
+        });
+
+      })
+
+
+      $(document).ready(function(){
+        $('.carousel').carousel();
+      });
+
+      $('.collapsible').collapsible();
+
+
+
+
+
+      /*=================== SIDENAV CATEGORY ===================*/
+      $('#button-collapse-category').sideNav({
+          menuWidth: 250,
+          edge: 'left',
+          closeOnClick: true,
+          draggable: true,
+          onOpen: function(el) {},
+          onClose: function(el) {},
+        }
+      );
+      /*=================== SIDENAV ACCOUNT ===================*/
+      $('#button-collapse-account').sideNav({
+          menuWidth: 250,
+          edge: 'right',
+          closeOnClick: true,
+          draggable: true,
+          onOpen: function(el) {},
+          onClose: function(el) {},
+        }
+      );
+
+
+
+
+
 
     },
     components: {
     	headTop,
-      goodList,
     	footGuide,
+      left,
+      right
+
     },
     computed: {
 
     },
     methods: {
     	...mapMutations([
-    		'RECORD_ADDRESS', 'SAVE_GEOHASH'
+
     	]),
-    	// 解码url地址，求去restaurant_category_id值
-    	getCategoryId(url){
-    		let urlData = decodeURIComponent(url.split('=')[1].replace('&target_name',''));
-    		if (/restaurant_category_id/gi.test(urlData)) {
-    			return JSON.parse(urlData).restaurant_category_id.id
-    		}else{
-    			return ''
-    		}
-    	}
+
     },
     watch: {
 
     }
+
 }
 
 </script>
 
-<style lang="scss" scoped>
-    @import 'src/style/mixin';
-	.link_search{
-		left: .8rem;
-		@include wh(.9rem, .9rem);
-		@include ct;
-	}
-	.msite_title{
-		@include center;
-        width: 50%;
-        color: #fff;
-        text-align: center;
-        margin-left: -0.5rem;
-        .title_text{
-            @include sc(0.8rem, #fff);
-            text-align: center;
-            display: block;
-        }
-	}
-	.msite_nav{
-		padding-top: 2.1rem;
-		background-color: #fff;
-		border-bottom: 0.025rem solid $bc;
-		height: 10.6rem;
-		.swiper-container{
-			@include wh(100%, auto);
-			padding-bottom: 0.6rem;
-			.swiper-pagination{
-				bottom: 0.6rem;
-			}
-		}
-		.fl_back{
-			@include wh(100%, 100%);
-		}
-	}
 
-  .image-type{
-    margin-top: 1.4rem;
-    display:block;
-    margin-bottom:fill ;
-    text-align: center
-  }
 
-	.shop_list_container{
-		margin-top: 0.2rem;
-		border-top: 0.025rem solid $bc;
-		background-color: #fff;
-		.shop_header{
-			.shop_icon{
-				fill: #999;
-				margin-left: 0.6rem;
-				vertical-align: middle;
-				@include wh(0.6rem, 0.6rem);
-			}
-			.shop_header_title{
-				color: #999;
-				@include font(0.55rem, 1.6rem);
-			}
-		}
-	}
 
-</style>
+
+

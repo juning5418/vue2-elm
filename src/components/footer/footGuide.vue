@@ -20,6 +20,7 @@
 
 	    	</defs>
     	</svg>
+
         <section @click = "gotoAddress({path: '/msite', query: {geohash}})" class="guide_item">
         	<svg class="icon_style">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="$route.path.indexOf('msite') !== -1? '#msiteActive' : '#msite'"></use>
@@ -77,7 +78,7 @@
 </script>
 
 <style lang="scss" scoped>
-    @import '../../style/mixin';
+    /*@import '../../style/mixin';*/
 
     #foot_guide{
         background-color: #fff;

@@ -42,7 +42,7 @@
 
 <script>
 import {mapMutations} from 'vuex'
-// import {imgBaseUrl} from 'src/config/env'
+import {imgBaseUrl} from 'src/config/env'
 import headTop from 'src/components/header/head'
 import footGuide from 'src/components/footer/footGuide'
 import shopList from 'src/components/common/shoplist'
@@ -125,7 +125,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import 'src/style/mixin';
+    //@import 'src/style/mixin';
 	.link_search{
 		left: .8rem;
 		@include wh(.9rem, .9rem);

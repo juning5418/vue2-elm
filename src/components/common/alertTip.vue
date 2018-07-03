@@ -20,7 +20,7 @@
             }
         },
         mounted(){
-      
+
         },
         props: ['alertText'],
         methods: {
@@ -32,7 +32,7 @@
 </script>
 
 <style lang="scss" scoped>
-    @import '../../style/mixin';
+    /*@import '../../style/mixin';*/
 	@keyframes tipMove{
        0%   { transform: scale(1) }
        35%  { transform: scale(.8) }
@@ -104,5 +104,5 @@
             border-bottom-right-radius: 0.25rem;
         }
     }
-    
+
 </style>

@@ -11,6 +11,9 @@ Object.keys(baseWebpackConfig.entry).forEach(function(name) {
 })
 
 module.exports = merge(baseWebpackConfig, {
+
+
+
     module: {
         loaders: utils.styleLoaders({
             sourceMap: config.dev.cssSourceMap
@@ -22,6 +25,16 @@ module.exports = merge(baseWebpackConfig, {
         new webpack.DefinePlugin({
             'process.env': config.dev.env
         }),
+
+        // 配置全局使用
+        new webpack.ProvidePlugin({
+          $: "jquery",
+          jQuery: "jquery",
+          jquery: "jquery",
+          'window.$': 'jquery',
+          "window.jQuery": "jquery"
+        }),
+
         // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
@@ -34,4 +47,9 @@ module.exports = merge(baseWebpackConfig, {
             inject: true
         })
     ]
+
+
+
+
+
 })

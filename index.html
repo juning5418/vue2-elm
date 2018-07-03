@@ -8,15 +8,28 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="full-screen" content="yes">
     <meta name="x5-fullscreen" content="true">
-    <title>elm</title>
-    <link rel="stylesheet" href="./style/red/css/materialize.min.css">
-    <link rel="stylesheet" href="./style/red/css/normalize.css">
-    <link rel="stylesheet" href="./style/red/css/style.css">
+    <!--<meta name="mobile-web-app-capable" content="yes">-->
+    <!--<meta name="apple-touch-fullscreen" content="yes">-->
+    <!--<meta name="HandheldFriendly" content="True">-->
 
-  </head>
-  <body>
+    <title>量心生活馆</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--<link rel="stylesheet" href="//fonts.lug.ustc.edu.cn/icon?family=Material+Icons">-->
+
+
+    </head>
+  <body id="homepage">
+
+    <!-- BEGIN PRELOADING -->
+    <div class="preloading">
+      <div class="wrap-preload">
+        <div class="cssload-loader"></div>
+      </div>
+    </div>
+
     <div id="app">
     	<router-view></router-view>
     </div>
   </body>
+
 </html>
