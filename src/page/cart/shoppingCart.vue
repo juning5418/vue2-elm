@@ -19,7 +19,7 @@
           <div class="row">
             <div class="col s12">
               <div class="section-title">
-                <span class="theme-secondary-color">Shopping</span> Cart
+                <span class="theme-secondary-color">购物</span> 车
               </div>
             </div>
           </div>
