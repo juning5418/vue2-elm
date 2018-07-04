@@ -28,7 +28,7 @@
       <div class="header-icon-menu cart-item-wrap" >
         <a href="#/shoppingCart">
           <i class="fas fa-shopping-cart"></i>
-          <!--<span class="cart-item">4</span>-->
+          <span class="cart-item" v-if="cartNumber>0">{{cartNumber}}</span>
         </a>
       </div>
 
@@ -49,29 +49,56 @@
 </template>
 
 <script>
-    import {mapState, mapActions} from 'vuex'
+    import {mapState, mapActions,mapMutations} from 'vuex'
     export default {
     	data(){
             return{
-
+                  cartNumber:0,
+                  shopId:1
             }
         },
         mounted(){
             //获取用户信息
             this.getUserInfo();
+            this.INIT_BUYCART();
 
+
+            if (this.shopCart) {
+              let cartKeys = Object.keys(this.shopCart);
+              this.cartNumber = cartKeys.length;
+
+            }
         },
         props: ['signinUp', 'headTitle', 'goBack'],
         computed: {
             ...mapState([
-                'userInfo'
+                'userInfo','cartList'
             ]),
+
+            //当前商店购物信息
+            shopCart: function (){
+              return {...this.cartList[this.shopId]};
+            },
         },
         methods: {
+
+            ...mapMutations([
+              'ADD_CART','INIT_BUYCART'
+            ]),
             ...mapActions([
                 'getUserInfo'
             ]),
         },
+        watch:{
+          shopCart:function () {
+            if (this.shopCart) {
+              let cartKeys = Object.keys(this.shopCart);
+              this.cartNumber = cartKeys.length;
+
+            }
+          }
+        }
+
 
     }
 

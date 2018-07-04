@@ -214,7 +214,7 @@
     },
     methods: {
       ...mapMutations([
-        'ADD_CART'
+        'ADD_CART','INIT_BUYCART'
       ]),
 
       buy:function () {
@@ -229,6 +229,7 @@
 
         this.ADD_CART({shopid: this.shopId, item_id:this.itemId, name:this.good.name, price:this.good.specfoods[0].price, number:this.number,image_path:this.good.image_path});
 
+        this.INIT_BUYCART();
       }
 
     },

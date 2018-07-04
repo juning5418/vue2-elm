@@ -109,15 +109,19 @@ export default {
     let cart = state.cartList;
     let item = cart[shopid] = (cart[shopid] || {});
 
-    item[item_id] = null;
-    item[item_id] = {
-      "shopid" : 1,
-      "id" : item_id,
-      "name" : name,
-      "price" : price,
-      "number" : number,
-      "image_path":image_path
-    };
+    if(item[item_id]){
+      item[item_id]['number']=number;
+    }else{
+      item[item_id] = {
+        "shopid" : 1,
+        "item_id" : item_id,
+        "name" : name,
+        "price" : price,
+        "number" : number,
+        "image_path":image_path
+      };
+    }
+
 
     state.cartList = {...cart};
     //存入localStorage
