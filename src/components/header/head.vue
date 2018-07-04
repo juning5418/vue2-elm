@@ -93,8 +93,16 @@
           shopCart:function () {
             if (this.shopCart) {
               let cartKeys = Object.keys(this.shopCart);
-              this.cartNumber = cartKeys.length;
+              // this.cartNumber = cartKeys.length;
+              this.cartNumber =0;
 
+              for(var i = 0 ;i <cartKeys.length ; i++){
+                var item = this.shopCart[cartKeys[i]];
+                if(item){
+                  this.cartNumber ++;
+
+                }
+              }
             }
           }
         }

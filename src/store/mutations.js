@@ -181,49 +181,56 @@ export default {
     let cart = state.cartList;
     // let _index = shopid+","+category_id+","+item_id;
 
-    let shop = (cart[shopid] || {});
-    // let category = shop[_index] = (shop[_index] || {});
+    let item = cart[shopid] = (cart[shopid] || {});
 
-    if (shop && shop[item_id]) {
-      if (shop[item_id]['num'] > 0) {
-        shop[item_id]['num']--;
-        state.cartList = {...cart};
-        //存入localStorage
-        setStore('buyCart', state.cartList);
-      } else {
-        //商品数量为0，则清空当前商品的信息
-        shop[item_id] = null;
-      }
+    if(item[item_id]) {
+      item[item_id] = null;
+    }
+  },
+  // 移出购物车
+  [REDUCE_CART](state, {
+    shopid,
+    item_id
+  }) {
+    let cart = state.cartList;
+
+    let item = cart[shopid] = (cart[shopid] || {});
+
+    if(item[item_id]) {
+      item[item_id] = null;
+
+      state.cartList = {...cart};
+      //存入localStorage
+      setStore('buyCart', state.cartList);
     }
   },
 
-
-	// 移出购物车
-	[REDUCE_CART](state, {
-		shopid,
-		category_id,
-		item_id,
-		food_id,
-		name,
-		price,
-		specs,
-	}) {
-		let cart = state.cartList;
-		let shop = (cart[shopid] || {});
-		let category = (shop[category_id] || {});
-		let item = (category[item_id] || {});
-		if (item && item[food_id]) {
-			if (item[food_id]['num'] > 0) {
-				item[food_id]['num']--;
-				state.cartList = {...cart};
-				//存入localStorage
-				setStore('buyCart', state.cartList);
-			} else {
-				//商品数量为0，则清空当前商品的信息
-				item[food_id] = null;
-			}
-		}
-	},
+	// // 移出购物车
+	// [REDUCE_CART](state, {
+	// 	shopid,
+	// 	category_id,
+	// 	item_id,
+	// 	food_id,
+	// 	name,
+	// 	price,
+	// 	specs,
+	// }) {
+	// 	let cart = state.cartList;
+	// 	let shop = (cart[shopid] || {});
+	// 	let category = (shop[category_id] || {});
+	// 	let item = (category[item_id] || {});
+	// 	if (item && item[food_id]) {
+	// 		if (item[food_id]['num'] > 0) {
+	// 			item[food_id]['num']--;
+	// 			state.cartList = {...cart};
+	// 			//存入localStorage
+	// 			setStore('buyCart', state.cartList);
+	// 		} else {
+	// 			//商品数量为0，则清空当前商品的信息
+	// 			item[food_id] = null;
+	// 		}
+	// 	}
+	// },
 	//网页初始化时从本地缓存获取购物车数据
 	[INIT_BUYCART](state) {
 		let initCart = getStore('buyCart');

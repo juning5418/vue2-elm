@@ -44,6 +44,8 @@
                       <div class="qty-prc">
                         <div class="quantity">
                           <input type="number" min="0" max="9999" step="1" v-model="item.number"></div>
+                          <div class="quantity-button quantity-up" @click="quantityUp(item)">+</div>
+                          <div class="quantity-button quantity-down" @click="quantityDown(item)">-</div>
                       </div>
                     </div>
                   </div>
@@ -105,13 +107,18 @@
       return{
         imgBaseUrl,
         totalPrice: 0, //总共价格
-        cartFoodList: [], //购物车商品列表
+        cartFoodList: [], //购物车商品列表,
+        min:1,
+        max:999
       }
     },
 
 
     mounted() {
       this.shopId =1;
+      this.INIT_BUYCART();
+      this.initData();
+
       $(document).ready(function(){
         $('.carousel').carousel();
       });
@@ -140,8 +147,42 @@
         }
       );
 
-      this.INIT_BUYCART();
-      this.initData();
+
+
+
+      // /*=================== QTY INPUT ===================*/
+      // $('.quantity').each(function() {
+      //   var spinner = jQuery(this),
+      //     input = spinner.find('input[type="number"]'),
+      //     btnUp = spinner.find('.quantity-up'),
+      //     btnDown = spinner.find('.quantity-down'),
+      //     min = input.attr('min'),
+      //     max = input.attr('max');
+      //
+      //   btnUp.on("click", function() {
+      //     var oldValue = parseFloat(input.val());
+      //     if (oldValue >= max) {
+      //       var newVal = oldValue;
+      //     } else {
+      //       var newVal = oldValue + 1;
+      //     }
+      //     spinner.find("input").val(newVal);
+      //     spinner.find("input").trigger("change");
+      //   });
+      //
+      //   btnDown.on("click", function() {
+      //     var oldValue = parseFloat(input.val());
+      //     if (oldValue <= min) {
+      //       var newVal = oldValue;
+      //     } else {
+      //       var newVal = oldValue - 1;
+      //     }
+      //     spinner.find("input").val(newVal);
+      //     spinner.find("input").trigger("change");
+      //   });
+      //
+      // });
+
 
     },
     // created(){
@@ -173,8 +214,34 @@
     },
     methods: {
       ...mapMutations([
-        'INIT_BUYCART'
+        'INIT_BUYCART','ADD_CART','REDUCE_CART'
       ]),
+
+      quantityUp:function (item) {
+        if(item.number<this.max) {
+          item.number++;
+          this.ADD_CART({shopid: this.shopId,
+            item_id:item.item_id, number:item.number});
+
+        }
+      },
+
+      quantityDown:function (item) {
+        if(item.number>this.min){
+          item.number--;
+          this.ADD_CART({shopid: this.shopId,
+            item_id:item.item_id, number:item.number});
+
+
+        }else if(item.number==this.min){
+          if(item.number==1){
+            this.REDUCE_CART({shopid: this.shopId,
+              item_id:item.item_id})
+          }
+        }
+
+
+      },
 
       async initData(){
         let newArr = [];
@@ -218,7 +285,11 @@
 
     },
     watch: {
-
+      shopCart:function () {
+        if (this.shopCart) {
+          this.initData();
+        }
+      }
     }
 
 
