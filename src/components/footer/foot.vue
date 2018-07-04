@@ -5,9 +5,9 @@
         <div class="footer-info">
           <div class="container">
             <div class="col s12 center">
-              <i class="fas fa-map-marker-alt"></i> Karangwaru St, Yogyakarta, Indonesia<br>
-              <i class="fas fa-phone-square"></i> (+62)-000-123456 <br>
-              <i class="fas fa-envelope"></i> halo@gromarttheme.com
+              <i class="fas fa-map-marker-alt"></i> 地址<br>
+              <i class="fas fa-phone-square"></i> 电话 <br>
+              <i class="fas fa-envelope"></i> 邮箱
             </div>
           </div>
         </div>
