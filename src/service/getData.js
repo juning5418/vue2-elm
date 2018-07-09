@@ -244,12 +244,17 @@ export const sendMobile = (sendData, captcha_code, type, password) => fetch('/v1
  * 确认订单
  */
 
-export const checkout = (geohash, entities, shopid) => fetch('/v1/carts/checkout', {
+export const checkout = ( entities, shopid,payments,type) => fetch('/v1/carts/checkout', {
 	come_from: "web",
-	geohash,
 	entities,
-	restaurant_id: shopid,
+  payments:payments,
+  shopid: shopid,
+  type:type
 }, 'POST');
+
+
+
+
 
 
 
@@ -434,7 +439,7 @@ var sendLogin = (code, mobile, validate_token) => fetch('/v1/login/app_mobile', 
  * 获取订单列表
  */
 
-export const getOrderList = (user_id, offset) => fetch('/bos/v2/users/' + user_id + '/orders', {
+export const getOrderList = (offset) => fetch('/bos/v2/users/orders', {
 	limit: 10,
 	offset,
 });
@@ -489,6 +494,7 @@ export const changePassword = (username, oldpassWord, newpassword, confirmpasswo
 
 
 
+export const getIndexTypes = () => fetch('/v1/indexTypes', data);
 
 
 

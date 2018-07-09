@@ -77,7 +77,11 @@
                   <div class="cp-right">￥ {{this.totalPrice}}</div>
                 </div>
               </div>
-              <button class="btn button-add-cart checkout-button">结算 <i class="fas fa-arrow-circle-right"></i></button>
+              <!--<router-link :to="{path:'/checkOut'}">-->
+
+                <button class="btn button-add-cart checkout-button" @click="checkOut()">结算 <i class="fas fa-arrow-circle-right"></i></button>
+
+              <!--</router-link>-->
 
               <!--<button class="btn button-add-cart checkout-button ">结算</button>-->
             </div>
@@ -101,6 +105,7 @@
   import right from 'src/components/common/right'
   import {getFoodDetal} from 'src/service/getData'
   import {imgBaseUrl} from 'src/config/env'
+  import router from "../../router/router";
 
   export default {
     data() {
@@ -150,47 +155,8 @@
 
 
 
-      // /*=================== QTY INPUT ===================*/
-      // $('.quantity').each(function() {
-      //   var spinner = jQuery(this),
-      //     input = spinner.find('input[type="number"]'),
-      //     btnUp = spinner.find('.quantity-up'),
-      //     btnDown = spinner.find('.quantity-down'),
-      //     min = input.attr('min'),
-      //     max = input.attr('max');
-      //
-      //   btnUp.on("click", function() {
-      //     var oldValue = parseFloat(input.val());
-      //     if (oldValue >= max) {
-      //       var newVal = oldValue;
-      //     } else {
-      //       var newVal = oldValue + 1;
-      //     }
-      //     spinner.find("input").val(newVal);
-      //     spinner.find("input").trigger("change");
-      //   });
-      //
-      //   btnDown.on("click", function() {
-      //     var oldValue = parseFloat(input.val());
-      //     if (oldValue <= min) {
-      //       var newVal = oldValue;
-      //     } else {
-      //       var newVal = oldValue - 1;
-      //     }
-      //     spinner.find("input").val(newVal);
-      //     spinner.find("input").trigger("change");
-      //   });
-      //
-      // });
-
 
     },
-    // created(){
-    //   this.initData();
-    // },
-    // activated(){
-    //   this.initData();
-    // },
 
 
     components: {
@@ -243,6 +209,11 @@
 
       },
 
+
+      checkOut:function(){
+        this.$router.push({ path: '/checkOut' })
+      },
+
       async initData(){
         let newArr = [];
         let cartFoodNum = 0;
@@ -258,20 +229,19 @@
 
           for(var i = 0 ;i <cartKeys.length ; i++){
             var item = this.shopCart[cartKeys[i]];
-            // itemKeys = Object.keys(forItem);
-            //   for(var j = 0 ;j <itemKeys.length ; j++) {
-            //     var item = this.shopCart[cartKeys[i]][itemKeys[j]];
-                num += item.number;
-                this.totalPrice += item.number*item.price;
-                this.cartFoodList[cartFoodNum] = {};
-                this.cartFoodList[cartFoodNum].item_id = item.item_id;
-                this.cartFoodList[cartFoodNum].number = item.number;
-                this.cartFoodList[cartFoodNum].price = item.price;
-                this.cartFoodList[cartFoodNum].name = item.name;
-                this.cartFoodList[cartFoodNum].image_path= item.image_path;
-                cartFoodNum ++;
+            if(item){
+              num += item.number;
+              this.totalPrice += item.number*item.price;
+              this.cartFoodList[cartFoodNum] = {};
+              this.cartFoodList[cartFoodNum].item_id = item.item_id;
+              this.cartFoodList[cartFoodNum].number = item.number;
+              this.cartFoodList[cartFoodNum].price = item.price;
+              this.cartFoodList[cartFoodNum].name = item.name;
+              this.cartFoodList[cartFoodNum].image_path= item.image_path;
+              cartFoodNum ++;
+            }
 
-              // }
+
             }
             newArr[i] = num;
 

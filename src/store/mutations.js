@@ -240,8 +240,10 @@ export default {
 	},
 	//清空当前商品的购物车信息
 	[CLEAR_CART](state, shopid) {
-		state.cartList[shopid] = null;
-		state.cartList = {...state.cartList};
+		// state.cartList[shopid] = null;
+    state.cartList = null;
+
+    state.cartList = {...state.cartList};
 		setStore('buyCart', state.cartList);
 	},
 	// 记录用户信息

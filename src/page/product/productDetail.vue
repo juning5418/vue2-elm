@@ -122,14 +122,23 @@
     created(){
       this.number=1;
     },
+    activated(){
+      this.number=1;
+      this.itemId = this.$route.params.itemId;
+      // this.itemId = this.$route.query.itemId;
+      getFoodDetal(this.shopId,this.itemId).then(res => {
+        let resLength = res.length;
+        let resArr = [...res]; // 返回一个新的数组
+        this.good =resArr[0];
+      }).then(() => {
 
+      })
+    },
     mounted() {
       this.shopId =1;
-      // this.number=1;
       $(document).ready(function(){
         $('.carousel').carousel();
       });
-
       $('.collapsible').collapsible();
 
 
@@ -153,20 +162,12 @@
           onClose: function(el) {},
         }
       );
-      this.itemId = this.$route.params.itemId;
-      // this.itemId = this.$route.query.itemId;
-      getFoodDetal(this.shopId,this.itemId).then(res => {
-        let resLength = res.length;
-        let resArr = [...res]; // 返回一个新的数组
-        this.good =resArr[0];
-      }).then(() => {
 
-      })
 
       /*=================== QTY INPUT ===================*/
       // $('<div class="quantity-button quantity-up">+</div><div class="quantity-button quantity-down">-</div>').insertAfter('.quantity input');
       $('.quantity').each(function() {
-          var spinner = jQuery(this),
+        var spinner = jQuery(this),
           input = spinner.find('input[type="number"]'),
           btnUp = spinner.find('.quantity-up'),
           btnDown = spinner.find('.quantity-down'),
@@ -200,6 +201,12 @@
 
       });
 
+
+
+
+
+
+
     },
 
 
@@ -216,7 +223,10 @@
       ...mapMutations([
         'ADD_CART','INIT_BUYCART'
       ]),
+      async initData(){
+        this.shopId = 1;
 
+      },
       buy:function () {
 
         $('.quantity').each(function() {
@@ -230,6 +240,7 @@
         this.ADD_CART({shopid: this.shopId, item_id:this.itemId, name:this.good.name, price:this.good.specfoods[0].price, number:this.number,image_path:this.good.image_path});
 
         this.INIT_BUYCART();
+        this.$router.push({ path: '/shoppingCart' });
       }
 
     },

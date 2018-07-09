@@ -35,39 +35,61 @@
               </div>
             </div>
           </div>
-          <div class="row icon-service">
-            <div class="col s4 m4 l4">
+          <div class="row icon-service" v-for="(item ,index) in indexTypes">
+
+            <div class="col s4 m4 l4" v-if="index<3">
               <div class="content">
                 <div class="in-content">
                   <div class="in-in-content">
-                    <img src="../../images/red/c-diet.png" alt="category">
-                    <h5>日常</h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col s4 m4 l4">
-              <div class="content">
-                <div class="in-content">
-                  <div class="in-in-content">
-                    <img src="../../images/red/c-groceries.png" alt="category">
-                    <h5>礼物</h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col s4 m4 l4">
-              <div class="content">
-                <div class="in-content">
-                  <div class="in-in-content">
-                    <img src="../../images/red/c-apple.png" alt="category">
-                    <h5>活动</h5>
+                    <img :src="imgBaseUrl + item.image" alt="category">
+                    <h5>{{item.name}}</h5>
                   </div>
                 </div>
               </div>
             </div>
 
           </div>
+
+
+          <!--<div class="row icon-service" >-->
+
+
+            <!--<div class="col s4 m4 l4">-->
+              <!--<div class="content">-->
+                <!--<div class="in-content">-->
+                  <!--<div class="in-in-content">-->
+                    <!--<img src="../../images/red/c-diet.png" alt="category">-->
+                    <!--<h5>日常</h5>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+
+
+
+            <!--<div class="col s4 m4 l4">-->
+              <!--<div class="content">-->
+                <!--<div class="in-content">-->
+                  <!--<div class="in-in-content">-->
+                    <!--<img src="../../images/red/c-groceries.png" alt="category">-->
+                    <!--<h5>礼物</h5>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col s4 m4 l4">-->
+              <!--<div class="content">-->
+                <!--<div class="in-content">-->
+                  <!--<div class="in-in-content">-->
+                    <!--<img src="../../images/red/c-apple.png" alt="category">-->
+                    <!--<h5>活动</h5>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+
+          </div>
+
         </div>
       </div>
       <!-- END CATEGORY -->
@@ -196,7 +218,8 @@ export default {
             // imgBaseUrl: 'https://image.woarehere.com', //图片域名地址
             banners:[],
           keywords:[],
-          foods:[]
+          foods:[],
+          indexTypes:[]
             // banners: ['http://h5.heptalcc.com/img/163c98254843.png',
             // 'http://h5.heptalcc.com/img/163c98254843.png'],
         }
@@ -205,6 +228,12 @@ export default {
 
 
     mounted(){
+
+      getIndexTypes().then(res => {
+        this.indexTypes=[...res];
+      })
+
+
 
       getBanners().then(res => {
         let resLength = res.length;

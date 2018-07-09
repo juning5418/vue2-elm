@@ -14,12 +14,14 @@
       </div>
     </li>
     <li>
-      <a class="waves-effect waves-blue" href="/msite"><i class="fas fa-home"></i>首页</a>
+      <a class="waves-effect waves-blue" href="#/"><i class="fas fa-home"></i>首页</a>
     </li>
+    <!--<li>-->
+      <!--<a href="wish-list.html"><i class="fas fa-heart"></i>我的收藏</a>-->
+    <!--</li>-->
     <li>
-      <a href="wish-list.html"><i class="fas fa-heart"></i>我的收藏</a>
+      <a href="#/orderList"><i class="fas fa-heart"></i>我的订单</a>
     </li>
-
 
     <li>
       <ul class="collapsible collapsible-accordion">
@@ -109,9 +111,11 @@ export default {
     //退出登录
     async outLogin(){
       this.OUT_LOGIN();
-      this.$router.go(-1);
+      // this.$router.go(-1);
       removeStore('user_id')
       await signout();
+      this.$router.push({ path: '/' })
+
     },
 
     initData(){

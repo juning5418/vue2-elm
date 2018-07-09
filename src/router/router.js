@@ -15,6 +15,9 @@ const addAddressDetail = r => require.ensure([], () => r(require('../page/profil
 
 const shoppingCart = r => require.ensure([], () => r(require('../page/cart/shoppingCart')), 'shoppingCart')
 
+const orderList = r => require.ensure([], () => r(require('../page/order/orderList')), 'orderList')
+const orderDetail = r => require.ensure([], () => r(require('../page/order/orderDetail')), 'orderDetail')
+const checkOut = r => require.ensure([], () => r(require('../page/cart/checkOut')), 'checkOut')
 
 // const info = r => require.ensure([], () => r(require('../page/profile/children/info')), 'info')
 // const setusername = r => require.ensure([], () => r(require('../page/profile/children/children/setusername')), 'setusername')
@@ -93,6 +96,24 @@ export default [{
         component: shoppingCart,
         meta: { keepAlive: true },
       },
+
+      {
+        path: '/orderList',
+        component: orderList,
+        meta: { keepAlive: true },
+      },
+
+      {
+        path:'/checkOut',
+        component: checkOut,
+        meta: { keepAlive: true },
+      },
+      {
+        path: '/orderDetail',
+        component: orderDetail,
+        meta: { keepAlive: true },
+      },
+
         //所有商铺列表页
         {
             path: '/msite',
