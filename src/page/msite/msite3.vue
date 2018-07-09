@@ -37,7 +37,7 @@
           </div>
           <div class="row icon-service" v-for="(item ,index) in indexTypes">
 
-            <div class="col s4 m4 l4" v-if="index<3">
+            <div class="col s4 m4 l4">
               <div class="content">
                 <div class="in-content">
                   <div class="in-in-content">
