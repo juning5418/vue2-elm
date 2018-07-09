@@ -89,9 +89,7 @@
             <!--</div>-->
 
           </div>
-
         </div>
-      </div>
       <!-- END CATEGORY -->
       <!-- POPULER SEARCH -->
       <div class="section populer-search">
@@ -203,7 +201,7 @@ import headTop from 'src/components/header/head'
 import footGuide from 'src/components/footer/foot'
 import left from 'src/components/common/left'
 import right from 'src/components/common/right'
-import {getBanners,getKeywords,getFoods} from 'src/service/getData'
+import {getBanners,getKeywords,getFoods,getIndexTypes} from 'src/service/getData'
 import {imgBaseUrl} from 'src/config/env'
 
 
@@ -230,7 +228,16 @@ export default {
     mounted(){
 
       getIndexTypes().then(res => {
-        this.indexTypes=[...res];
+        let resLength = res.length;
+        let resArr=[...res];
+
+
+        let indexArr = [];
+        for (let i = 0; i < resLength; i += 3) {
+          indexArr[i] = resArr[i];
+        }
+        this.indexTypes = indexArr;
+
       })
 
 

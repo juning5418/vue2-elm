@@ -494,7 +494,7 @@ export const changePassword = (username, oldpassWord, newpassword, confirmpasswo
 
 
 
-export const getIndexTypes = () => fetch('/v1/indexTypes', data);
+export const getIndexTypes = () => fetch('/v1/indexTypes');
 
 
 
