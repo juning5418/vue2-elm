@@ -494,7 +494,7 @@ export const changePassword = (username, oldpassWord, newpassword, confirmpasswo
 
 
 
-export const getIndexTypes = () => fetch('/v1/indexTypes');
+export const getIndexTypes = () => fetch('/v1/indexTypes',{auth:1});
 
 
 
@@ -502,7 +502,7 @@ export const getIndexTypes = () => fetch('/v1/indexTypes');
  * 获取banners
  */
 
-export const getBanners = () => fetch('/v1/banners');
+export const getBanners = () => fetch('/v1/banners',{auth:1});
 
 export const getKeywords = () => fetch('/v1/getKeywords');
 
