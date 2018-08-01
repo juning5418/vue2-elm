@@ -29,7 +29,7 @@
               <div class="col s12">
                 <div class="wish-box">
                   <div class="wi-img">
-                    <img class="wi-img-product" :src="imgBaseUrl + item.image_path"/>
+                    <img class="wi-img-product" :src="imgBaseUrl +'food/' +item.image_path"/>
                     <!--<div class="wi-img-product" style="background-image: url(img/cabbage_PNG8821.jpg);">-->
                     <!--</div>-->
                   </div>

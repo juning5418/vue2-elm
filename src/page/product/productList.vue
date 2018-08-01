@@ -31,12 +31,12 @@
                     <div class="product-list-img">
                       <div class="pli-one">
                         <div class="pli-two">
-                          <img :src="imgBaseUrl + item.image_path" alt="img">
+                          <img :src="imgBaseUrl + 'food/'+ item.image_path" alt="img">
                         </div>
                       </div>
                     </div>
                     <h5><a href="">{{item.name}}</a></h5>
-                    <div class="item-info">{{item.description}}</div>
+                    <!--<div class="item-info">{{item.description}}</div>-->
                     <div class="price">￥{{item.specfoods[0].price}}</div>
                     <div class="stock-item">{{item.stock}}</div>
                   </div>

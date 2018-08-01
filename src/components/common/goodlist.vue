@@ -6,7 +6,7 @@
 
       <router-link :to="{path: 'itemDetail', query:{shopId:1,geohash,price:item.specfoods[0].price,item_id:item.item_id,image_path:item.image_path, description: item.description, month_sales: item.month_sales, name: item.name, rating: item.rating, rating_count: item.rating_count, satisfy_rate: item.satisfy_rate, goods: item}}" v-for="item in goodListArr" tag='li' :key="item.id" class="shop_li">
 				<section>
-					<img :src="imgBaseUrl + item.image_path" class="shop_img">
+					<img :src="imgBaseUrl + 'food/'+ item.image_path" class="shop_img">
 				</section>
 				<hgroup class="shop_right">
 					<header class="shop_detail_header">

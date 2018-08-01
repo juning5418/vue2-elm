@@ -18,7 +18,7 @@
         <div class="carousel carousel-slider " data-indicators="true"  v-for="(item, index) in banners">
           <a class="carousel-item" >
 
-            <img :src="imgBaseUrl + item.image" alt="slider">
+            <img :src="imgBaseUrl + 'banner/'+ item.image" alt="slider">
             <!--<img src="../../images/red/slide2.jpg" alt="slider">-->
           </a>
         </div>
@@ -41,7 +41,7 @@
               <div class="content">
                 <div class="in-content">
                   <div class="in-in-content">
-                    <img :src="imgBaseUrl + item.image" alt="category">
+                    <img :src="imgBaseUrl + 'indextype/' + item.image" alt="category">
                     <h5>{{item.name}}</h5>
                   </div>
                 </div>
@@ -138,13 +138,13 @@
                             <div class="pli-one">
                               <div class="pli-two">
 
-                                <img :src="imgBaseUrl + item.image_path" alt="img">
+                                <img :src="imgBaseUrl + 'food/'+ item.image_path" alt="img">
                                 <!--<img src="../../images/red/carrot_PNG4978.jpg" alt="img">-->
                               </div>
                             </div>
                           </div>
                           <h5><a href="">{{item.name}}</a></h5>
-                          <div class="item-info">{{item.description}}</div>
+                          <!--<div class="item-info">{{item.description}}</div>-->
                           <div class="price">￥{{item.specfoods[0].price}}</div>
                           <div class="stock-item">{{item.stock}}</div>
                         </div>

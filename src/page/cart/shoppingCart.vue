@@ -29,7 +29,7 @@
                 <!-- item-->
                 <div class="cart-item">
                   <div class="ci-img">
-                    <img class="ci-img-product" :src="imgBaseUrl+item.image_path">
+                    <img class="ci-img-product" :src="imgBaseUrl+ 'food/'+ item.image_path">
                     <!--<div class="ci-img-product" style="background-image: url(img/cabbage_PNG8821.jpg);">-->
                     <!--</div>-->
                   </div>
