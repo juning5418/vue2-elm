@@ -23,7 +23,7 @@
         <carousel class="index-carousel" :autoplay="true"
                   :minSwipeDistance="40" :scrollPerPage="true"
                   :speed="1000" :perPage="1" :paginationPadding="10"
-                  :paginationSize="10" :loop="true" @param="right">
+                  :paginationSize="10" :loop="true" >
 
           <slide v-for="(item, index) in banners">
             <img :src="imgBaseUrl + 'banner/'+ item.image" alt="slider" style="width: 100%">
