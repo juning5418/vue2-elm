@@ -14,14 +14,31 @@
 
       <!-- MAIN SLIDER -->
 
-      <div class="main-slider" data-indicators="true">
-        <div class="carousel carousel-slider " data-indicators="true"  v-for="(item, index) in banners">
-          <a class="carousel-item" >
 
-            <img :src="imgBaseUrl + 'banner/'+ item.image" alt="slider">
-            <!--<img src="../../images/red/slide2.jpg" alt="slider">-->
-          </a>
-        </div>
+
+
+      <div class="main-slider" data-indicators="true">
+
+
+        <carousel class="index-carousel" :autoplay="true"
+                  :minSwipeDistance="40" :scrollPerPage="true"
+                  :speed="1000" :perPage="1" :paginationPadding="10"
+                  :paginationSize="10" :loop="true" @param="right">
+
+          <slide v-for="(item, index) in banners">
+            <img :src="imgBaseUrl + 'banner/'+ item.image" alt="slider" style="width: 100%">
+          </slide>
+        </carousel>
+
+
+        <!--<div class="carousel carousel-slider " data-indicators="true"  v-for="(item, index) in banners">-->
+          <!--<a class="carousel-item" >-->
+            <!--<img :src="imgBaseUrl + 'banner/'+ item.image" alt="slider">-->
+          <!--</a>-->
+        <!--</div>-->
+
+
+
       </div>
 
 
@@ -197,6 +214,7 @@
 
 <script>
 import {mapMutations} from 'vuex'
+import {Carousel, Slide } from 'vue-carousel';
 import headTop from 'src/components/header/head'
 import footGuide from 'src/components/footer/foot'
 import left from 'src/components/common/left'
@@ -337,7 +355,9 @@ export default {
     	headTop,
     	footGuide,
       left,
-      right
+      right,
+      Carousel,
+      Slide
 
     },
     computed: {
@@ -356,6 +376,10 @@ export default {
 }
 
 </script>
+
+
+
+
 
 
 
