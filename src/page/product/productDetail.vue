@@ -106,6 +106,7 @@
         number:1,
         backImageDetail:'url(' + require('../../images/red/cabbage_PNG8821.jpg') + ')',
         itemId:null,
+        shopId:null,
         good:{
           name:null,
           specfoods:[
@@ -226,7 +227,7 @@
         'ADD_CART','INIT_BUYCART'
       ]),
       async initData(){
-        this.shopId = 1;
+        // this.shopId = 1;
 
       },
       buy:function () {
