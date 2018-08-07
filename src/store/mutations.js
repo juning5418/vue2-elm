@@ -113,7 +113,7 @@ export default {
       item[item_id]['number']=number;
     }else{
       item[item_id] = {
-        "shopid" : 1,
+        "shopid" : shopid,
         "item_id" : item_id,
         "name" : name,
         "price" : price,
