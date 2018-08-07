@@ -135,7 +135,7 @@ export default [{
 
         //商品详情
         {
-          path: '/productDetail/:itemId',
+          path: '/productDetail/:itemId/:shopId',
           component: productDetail,
           meta: { keepAlive: true },
 

@@ -125,6 +125,8 @@
     activated(){
       this.number=1;
       this.itemId = this.$route.params.itemId;
+      this.shopId = this.$route.params.shopId;
+
       // this.itemId = this.$route.query.itemId;
       getFoodDetal(this.shopId,this.itemId).then(res => {
         let resLength = res.length;
@@ -135,7 +137,7 @@
       })
     },
     mounted() {
-      this.shopId =1;
+      // this.shopId =1;
       $(document).ready(function(){
         $('.carousel').carousel();
       });

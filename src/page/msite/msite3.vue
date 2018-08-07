@@ -149,7 +149,7 @@
                 <div v-for="(item, index) in foods" >
                   <div class="col-slick-product" >
                     <div class="box-product">
-                      <router-link :to="{path: '/productDetail/'+item.item_id}" >
+                      <router-link :to="{path: '/productDetail/'+item.item_id+'/'+item.restaurant_id}" >
                         <div class="bp-top">
                           <div class="product-list-img">
                             <div class="pli-one">
@@ -167,7 +167,7 @@
                         </div>
                       </router-link>
                       <div class="bp-bottom">
-                        <router-link :to="{path: '/productDetail/'+item.item_id}" >
+                        <router-link :to="{path: '/productDetail/'+item.item_id+'/'+item.restaurant_id}" >
 
                         <button class="btn button-add-cart">购买</button>
                           </router-link>
