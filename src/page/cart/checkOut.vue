@@ -59,22 +59,27 @@
                     <div style="margin: 0px 0px 10px">选择你的支付方式 :</div>
                   </div>
                 </div>
-                <div class="row">
+
+                <!--<input type="radio" name="test" v-for="(item,index) in list" :value="item.value" v-model="checkedValue">-->
+
+                <div class="row"  >
                   <div class="col s12 m12 l12 ">
                     <p>
-                      <input class="with-gap" name="group1" type="radio" id="test1"/>
-                      <label for="test1">支付宝</label>
+                      <input class="with-gap" name="group" type="radio" id="ali" value="ali" v-model="checkedValue"/>
+                      <label for="ali">支付宝</label>
                     </p>
                   </div>
                 </div>
+
                 <div class="row">
                   <div class="col s12 m12 l12 ">
                     <p>
-                      <input class="with-gap" name="group1" type="radio" id="test2"/>
-                      <label for="test2">微信</label>
+                      <input class="with-gap" name="group" type="radio" value="weixin" v-model="checkedValue" id="weixin"/>
+                      <label for="weixin">微信</label>
                     </p>
                   </div>
                 </div>
+
               </div>
               <br>
               <br>
@@ -104,7 +109,7 @@
   import left from 'src/components/common/left'
   import right from 'src/components/common/right'
   import {imgBaseUrl} from 'src/config/env'
-  import {checkout} from 'src/service/getData'
+  import {checkout,payAli,payWenxin} from 'src/service/getData'
 
   export default {
     data() {
@@ -113,7 +118,10 @@
         totalPrice: 0, //总共价格
         cartFoodList: [], //购物车商品列表,
         min:1,
-        max:999
+        max:999,
+        list:[{value:'ali'},{value:'weixin'}],
+        checkedValue:''
+
       }
     },
     activated() {
@@ -217,9 +225,39 @@
       },
 
       async checkOut() {
-         await checkout(this.cartFoodList,this.shopId,0,1);
-         this.CLEAR_CART({shopid: this.shopId})
-         this.$router.push({ path: '/shoppingCart' })
+        console.log(this.checkedValue);
+
+        if(this.checkedValue==''){
+          console.log('请选择支付选项');
+        }else{
+          // if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+          //   window.location.href = "https://www.baidu.com/";
+          // }else{
+          //
+          // }
+
+          var order = await checkout(this.cartFoodList,this.shopId,0,1);
+          console.log(order);
+
+          this.CLEAR_CART({shopid: this.shopId});
+          if(order == undefined || order == null){
+
+          }else{
+            if(this.checkedValue =='ali'){
+              this.payInfo = await payAli(order.id)
+              window.location.href = this.payInfo.url;
+            }else if(this.checkedValue =='weixin'){
+              this.payInfo = await payWenxin(order.id);
+              if(this.payInfo.xml.return_code=="SUCCESS"){
+                window.location.href = this.payInfo.xml.code_url;
+              }
+            }
+          }
+
+
+
+        }
+
       }
 
     },

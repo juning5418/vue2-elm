@@ -17,16 +17,16 @@
 
 
 
-      <div class="main-slider" data-indicators="true">
+      <div class="main-slider" data-indicators="true" >
 
 
         <carousel class="index-carousel" :autoplay="true"
                   :minSwipeDistance="40" :scrollPerPage="true"
                   :speed="1000" :perPage="1" :paginationPadding="10"
-                  :paginationSize="10" :loop="true" >
+                  :paginationSize="10" :loop="true"  >
 
           <slide v-for="(item, index) in banners">
-            <img :src="imgBaseUrl + 'banner/'+ item.image" alt="slider" style="width: 100%">
+            <img :src="imgBaseUrl + 'banner/'+ item.image" alt="slider" class="banner-image" >
           </slide>
         </carousel>
 
@@ -377,6 +377,14 @@ export default {
 
 </script>
 
+
+<style>
+
+
+  .banner-image{
+    width: 100%;
+  }
+</style>
 
 
 

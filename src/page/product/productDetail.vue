@@ -20,7 +20,7 @@
           <div class="pgp-wrap-img">
             <div class="pgp-wrap-img-in">
               <!--<div class="pgp-img" />-->
-                <img  :src="imgBaseUrl + good.image_path" class="pgp-img" />
+                <img  :src="imgBaseUrl + 'food/' + good.image_path" class="pgp-img" />
 
               <!--<div class="pgp-img" style="background-image: url(../../static/img/cabbage_PNG8821.jpg);">-->
               <!--</image>-->

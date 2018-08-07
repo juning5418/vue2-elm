@@ -507,3 +507,9 @@ export const getBanners = () => fetch('/v1/banners',{auth:1});
 export const getKeywords = () => fetch('/v1/getKeywords');
 
 
+export const payAli = (order_id) => fetch('/v3/payAli/'+order_id, {},'POST');
+export const payWenxin = (order_id) => fetch('/v3/payWenxin/'+order_id, {},'POST');
+
+
+
+
