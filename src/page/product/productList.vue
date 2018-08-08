@@ -41,7 +41,9 @@
                     <div class="stock-item">{{item.stock}}</div>
                   </div>
                   <div class="bp-bottom">
-                    <button class="btn button-add-cart">购买</button>
+                    <router-link :to="{path: '/productDetail/'+item.item_id+'/'+item.restaurant_id}" >
+                      <button class="btn button-add-cart" >购买</button>
+                    </router-link>
                   </div>
                 </div>
               </div>
@@ -138,8 +140,9 @@
     },
     methods: {
       ...mapMutations([
-
       ]),
+
+
 
     },
     watch: {
