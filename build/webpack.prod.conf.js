@@ -6,6 +6,12 @@ var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
+
+// add hot-reload related code to entry chunks
+// Object.keys(baseWebpackConfig.entry).forEach(function(name) {
+//   baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
+// })
+
 var env = config.build.env
 
 var webpackConfig = merge(baseWebpackConfig, {
@@ -32,6 +38,17 @@ var webpackConfig = merge(baseWebpackConfig, {
         new webpack.DefinePlugin({
             'process.env': env
         }),
+
+
+        // 配置全局使用
+        new webpack.ProvidePlugin({
+          $: "jquery",
+          jQuery: "jquery",
+          jquery: "jquery",
+          'window.$': 'jquery',
+          "window.jQuery": "jquery"
+        }),
+
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false

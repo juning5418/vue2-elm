@@ -14,10 +14,14 @@ let imgBaseUrl = '';
 
 if (process.env.NODE_ENV == 'development') {
     imgBaseUrl = 'http://h5.heptalcc.com:8001/img/';
+  // imgBaseUrl = 'http://localhost:8001/img/';
+
 
 }else if(process.env.NODE_ENV == 'production'){
-	baseUrl = '//elm.cangdu.org';
-    imgBaseUrl = '//elm.cangdu.org/img/';
+    baseUrl = '//h5.heptalcc.com';
+    imgBaseUrl = '//h5.heptalcc.com:8001/img/';
+  // baseUrl = '//localhost:8000';
+  // imgBaseUrl = '//localhost:8001/img/';
 }
 
 export {
