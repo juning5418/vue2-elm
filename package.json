@@ -9,6 +9,11 @@
     "online": "cross-env NODE_ENV=local node build/dev-server.js",
     "pro": "cross-env NODE_ENV=production node build/pro-server.js",
     "local": "cross-env NODE_ENV=local node build/dev-server.js",
+
+    "startPro": "cross-env NODE_ENV=production pm2 start node build/pro-server.js --name 'vue2-elm --port 8000'",
+    "stopPro": "cross-env NODE_ENV=production pm2 stop node build/pro-server.js --name 'vue2-elm --port 8000'",
+    "restartPro": "cross-env NODE_ENV=production pm2 restart node build/pro-server.js --name 'vue2-elm --port 8000'",
+
     "start": "cross-env NODE_ENV=local pm2 start node build/dev-server.js --name 'vue2-elm --port 8000'",
     "stop": "cross-env NODE_ENV=local pm2 stop node build/dev-server.js --name 'vue2-elm --port 8000'",
     "restart": "cross-env NODE_ENV=local pm2 restart node build/dev-server.js --name 'vue2-elm --port 8000'",
