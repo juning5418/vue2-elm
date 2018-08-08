@@ -125,7 +125,7 @@
       }
     },
     activated() {
-      this.shopId =1;
+      // this.shopId =1;
       this.initData();
     },
 
@@ -179,7 +179,7 @@
       ,
       //当前商店购物信息
       shopCart: function (){
-        return {...this.cartList[this.shopId]};
+        return {...this.cartList};
       },
 
     },
@@ -197,30 +197,61 @@
 
 
         if (this.shopCart) {
+
+
           cartKeys = Object.keys(this.shopCart);
           let num = 0;
 
-          for(var i = 0 ;i <cartKeys.length ; i++){
+          for (var i = 0; i < cartKeys.length; i++) {
             var item = this.shopCart[cartKeys[i]];
-            if(item){
-              num += item.number;
-              this.totalPrice += item.number*item.price;
-              this.cartFoodList[cartFoodNum] = {};
-              this.cartFoodList[cartFoodNum].item_id = item.item_id;
-              this.cartFoodList[cartFoodNum].number = item.number;
-              this.cartFoodList[cartFoodNum].price = item.price;
-              this.cartFoodList[cartFoodNum].name = item.name;
-              this.cartFoodList[cartFoodNum].image_path= item.image_path;
-              cartFoodNum ++;
+            itemKeys = Object.keys(item);
+            for (var j = 0; j < itemKeys.length; j++) {
+              var cartItem = item[itemKeys[j]];
+              if (cartItem) {
+                num += cartItem.number;
+                this.totalPrice += cartItem.number * cartItem.price;
+                this.cartFoodList[cartFoodNum] = {};
+                this.cartFoodList[cartFoodNum].item_id = cartItem.item_id;
+                this.cartFoodList[cartFoodNum].number = cartItem.number;
+                this.cartFoodList[cartFoodNum].price = cartItem.price;
+                this.cartFoodList[cartFoodNum].name = cartItem.name;
+                this.cartFoodList[cartFoodNum].image_path = cartItem.image_path;
+                this.cartFoodList[cartFoodNum].shopid = cartItem.shopid;
+                cartFoodNum++;
+              }
+              newArr[j] = num;
             }
-
           }
-          newArr[i] = num;
-          this.totalPrice = this.totalPrice.toFixed(2);
-
         }else{
           newArr[0] = 0;
         }
+        this.totalPrice = this.totalPrice.toFixed(2);
+
+
+        //   cartKeys = Object.keys(this.shopCart);
+        //   let num = 0;
+        //
+        //   for(var i = 0 ;i <cartKeys.length ; i++){
+        //     var item = this.shopCart[cartKeys[i]];
+        //     if(item){
+        //       num += item.number;
+        //       this.totalPrice += item.number*item.price;
+        //       this.cartFoodList[cartFoodNum] = {};
+        //       this.cartFoodList[cartFoodNum].item_id = item.item_id;
+        //       this.cartFoodList[cartFoodNum].number = item.number;
+        //       this.cartFoodList[cartFoodNum].price = item.price;
+        //       this.cartFoodList[cartFoodNum].name = item.name;
+        //       this.cartFoodList[cartFoodNum].image_path= item.image_path;
+        //       cartFoodNum ++;
+        //     }
+        //
+        //   }
+        //   newArr[i] = num;
+        //   this.totalPrice = this.totalPrice.toFixed(2);
+        //
+        // }else{
+        //   newArr[0] = 0;
+        // }
 
       },
 
@@ -236,10 +267,12 @@
           //
           // }
 
-          var order = await checkout(this.cartFoodList,this.shopId,0,1);
+          var order = await checkout(this.cartFoodList,"",0,1);
           console.log(order);
 
-          this.CLEAR_CART({shopid: this.shopId});
+          this.CLEAR_CART({shopid: ""});
+          // this.CLEAR_CART({shopid: this.shopId});
+
           if(order == undefined || order == null){
 
           }else{
